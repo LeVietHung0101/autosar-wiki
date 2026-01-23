@@ -1,8 +1,8 @@
-title: Just the Docs Template
-description: A starter template for a Jeykll site using the Just the Docs theme!
+title: Autosar Wiki
+description: An Autosar personal research document
 theme: just-the-docs
 
-url: https://just-the-docs.github.io
+url: https://LeVietHung0101.github.io/autosar-wiki
 
 aux_links:
   Template Repository: https://github.com/just-the-docs/just-the-docs-template
