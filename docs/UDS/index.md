@@ -45,7 +45,7 @@ Ví dụ: bạn có thể kết nối một thiết bị giao tiếp CAN vào c�
       alt="Vị trí cổng OBD-II trên xe"
     />
     <img
-      src="\assets\images\OBDII_Scaner_BOSCH.png"
+      src="{{ site.baseurl }}\assets\images\OBDII_Scaner_BOSCH.png"
       alt="Máy quét OBD-II BOSH"
     />
   </div>
