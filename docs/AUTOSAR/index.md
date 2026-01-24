@@ -111,7 +111,7 @@ Liên minh AUTOSAR phân loại thành viên theo cấp độ để khuyến kh�
 
 <figure>
   <img
-    src="\assets\images\TypeOfAutosarPartnership.png"
+    src="{{ site.baseurl }}\assets\images\TypeOfAutosarPartnership.png"
     alt="Các loại thành viên Autosar"
   />
   <figcaption>Các loại thành viên Autosar</figcaption>

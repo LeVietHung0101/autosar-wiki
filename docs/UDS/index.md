@@ -41,7 +41,7 @@ Ví dụ: bạn có thể kết nối một thiết bị giao tiếp CAN vào c�
 <figure class="figure-grid">
   <div class="image-row">
     <img
-      src="\assets\images\OBDII_port_on_vehicle.png"
+      src="{{ site.baseurl }}\assets\images\OBDII_port_on_vehicle.png"
       alt="Vị trí cổng OBD-II trên xe"
     />
     <img
@@ -62,7 +62,7 @@ Tuy nhiên, trong thực tế, đầu nối OBD-II (SAE J1962) vẫn được s�
 
 <figure>
   <img
-    src="\assets\images\ODBII_connector_pinout_socket.svg"
+    src="{{ site.baseurl }}\assets\images\ODBII_connector_pinout_socket.svg"
     alt="Sơ đồ chân cắm đầu nối OBD-II"
   />
   <figcaption>Sơ đồ chân cắm đầu nối OBD-II</figcaption>
@@ -79,7 +79,7 @@ Tuy nhiên, trong thực tế, đầu nối OBD-II (SAE J1962) vẫn được s�
 
 <figure>
   <img
-    src="\assets\images\UDS-Unified-Diagnostic-Services-OSI-Model-7-Layer.svg"
+    src="{{ site.baseurl }}\assets\images\UDS-Unified-Diagnostic-Services-OSI-Model-7-Layer.svg"
     alt="Mô hình OSI và UDS"
   />
   <figcaption>Mô hình OSI và UDS</figcaption>
