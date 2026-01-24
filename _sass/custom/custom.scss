@@ -1,4 +1,11 @@
 //#################################################################################################
+
+.main-content {
+  text-align: justify;
+}
+
+//#################################################################################################
+
 figure {
   text-align: center;
   display: inline-block;
@@ -45,3 +52,48 @@ figure.figure-grid img {
 }
 
 //#################################################################################################
+
+table, th, td {
+  border: 2px solid rgba(0, 0, 0, 0.02);
+}
+
+@mixin hover-table-highlight(
+  $cols,
+  $cell-color: rgba(0, 0, 0, 0.040),
+  $col-color: rgba(0, 0, 0, 0.080),
+  $row-color: rgba(0, 0, 0, 0.080)
+) {
+  table.hover-table {
+    border-collapse: collapse;
+
+    th, td {
+      padding: 0.6rem;
+      position: relative;
+      background-clip: padding-box;
+    }
+
+    /* CELL highlight */
+    td:hover,
+    th:hover {
+      background-color: $cell-color;
+    }
+
+    /* ROW highlight */
+    tbody tr:hover > td:not(:hover),
+    tbody tr:hover > th:not(:hover) {
+      background-color: $row-color;
+    }
+  }
+
+  @for $i from 1 through $cols {
+    table.hover-table:has(tr > *:nth-child(#{$i}):hover)
+      tr > *:nth-child(#{$i}):not(:hover) {
+      background-color: $col-color;
+    }
+  }
+}
+
+@include hover-table-highlight(6);
+
+//#################################################################################################
+
