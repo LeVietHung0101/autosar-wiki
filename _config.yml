@@ -1,8 +1,8 @@
 title: Autosar Wiki
 description: An Autosar personal research document
 theme: just-the-docs
-baseurl: /autosar-wiki
-# url: "https://LeVietHung0101.github.io/autosar-wiki"
+baseurl: ""
+url: "https://LeVietHung0101.github.io/autosar-wiki"
 
 permalink: pretty
 
