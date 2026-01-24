@@ -1,0 +1,47 @@
+//#################################################################################################
+figure {
+  text-align: center;
+  display: inline-block;
+  margin: 1.5rem auto;
+  padding: 0.6rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.06),
+    0 10px 20px rgba(0, 0, 0, 0.06);
+}
+
+figure img {
+  display: block;
+  border-radius: 6px;
+  max-width: 100%;
+}
+
+figure figcaption {
+  text-align: center;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--jt-color-text-muted);
+}
+
+//===============================================
+
+figure.figure-grid {
+  text-align: center;
+}
+
+figure.figure-grid .image-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+figure.figure-grid img {
+  height: 200px;
+  width: auto;
+  max-width: 50%;
+  object-fit: contain;
+}
+
+//#################################################################################################

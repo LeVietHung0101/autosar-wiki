@@ -1,8 +1,46 @@
 title: Autosar Wiki
 description: An Autosar personal research document
 theme: just-the-docs
+baseurl: ""
+url: "https://LeVietHung0101.github.io/autosar-wiki"
 
-url: https://LeVietHung0101.github.io/autosar-wiki
+permalink: pretty
 
-aux_links:
-  Template Repository: https://github.com/just-the-docs/just-the-docs-template
+defaults:
+  - scope:
+      path: "docs" # an empty string here means all files in the project
+      type: "pages"
+    values:
+      layout: "default"
+
+# Enable or disable the side/mobile menu globally
+# Nav menu can also be selectively enabled or disabled using page variables or the minimal layout
+nav_enabled: true
+
+# Sort order for navigation links
+# nav_sort: case_insensitive # default, equivalent to nil
+nav_sort: case_sensitive # Capital letters sorted before lowercase
+
+# Back to top link
+back_to_top: true
+back_to_top_text: "Back to top"
+
+# When commented out, callouts_level defaults to quiet for the light scheme, and loud for dark
+# callouts_level: quiet # or loud
+callouts:
+  highlight:
+    color: yellow
+  important:
+    title: Important
+    color: blue
+  new:
+    title: New
+    color: green
+  note:
+    title: Note
+    color: purple
+  warning:
+    title: Warning
+    color: red
+
+
