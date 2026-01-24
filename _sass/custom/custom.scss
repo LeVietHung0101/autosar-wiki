@@ -57,6 +57,17 @@ table, th, td {
   border: 2px solid rgba(0, 0, 0, 0.02);
 }
 
+table {
+  th {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  td {
+    text-align: left;
+  }
+}
+
 @mixin hover-table-highlight(
   $cols,
   $cell-color: rgba(0, 0, 0, 0.040),
