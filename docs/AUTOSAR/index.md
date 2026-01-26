@@ -6,13 +6,17 @@ nav_order: 2
 
 # AUTOSAR
 
+<strong>Mục lục</strong>
+1. TOC
+{:toc}
+
 ---
 
 ## AUTOSAR là gì?
 
-AUTOSAR (**AUT**omotive **O**pen **S**ystem **AR**chitecture) là một liên minh toàn cầu của các công ty hàng đầu trong ngành ô tô và phần mềm nhằm phát triển và thiết lập khung phần mềm tiêu chuẩn hóa cùng **open Electrical/Electronic system architecture** cho di chuyển thông minh.
+**AUTOSAR** (**AUT**omotive **O**pen **S**ystem **AR**chitecture) là một liên minh toàn cầu của các công ty hàng đầu trong ngành ô tô và phần mềm nhằm phát triển và thiết lập khung phần mềm tiêu chuẩn hóa cùng **open Electrical/Electronic system architecture** cho di chuyển thông minh.
 
-Các công ty này gồm các nhà sản xuất ô tô (OEM), nhà cung cấp, và các công ty từ ngành điện tử, bán dẫn và phần mềm.
+Các công ty này gồm các nhà sản xuất ô tô (Original Equipment Manufacturer - OEM), nhà cung cấp (supplier), và các công ty từ ngành điện tử, bán dẫn và phần mềm.
 
 ---
 
@@ -20,7 +24,7 @@ Các công ty này gồm các nhà sản xuất ô tô (OEM), nhà cung cấp, v
 
 Phạm vi của AUTOSAR bao gồm tất cả các lĩnh vực liên quan đến xe hơi, ngoại trừ lĩnh vực thông tin giải trí (infotainment).
 - Các lĩnh vực thân xe (body), hệ thống truyền động (power train) và khung gầm (chassis).
-- Tất cả các ứng dụng điều khiển xe đều được đề cập, đặc biệt là các chức năng phân tán, hỗ trợ cho xe kết nối và tự động hóa (ví dụ: thông qua các bus như CAN, Ethernet).
+- Tất cả các ứng dụng điều khiển xe đều được đề cập, đặc biệt là các chức năng phân tán (distributed functions), hỗ trợ cho xe kết nối và tự động hóa (ví dụ: thông qua các bus như CAN, Ethernet).
 
 ---
 
@@ -29,24 +33,24 @@ Phạm vi của AUTOSAR bao gồm tất cả các lĩnh vực liên quan đến 
 Quy trình phát triển hệ thống dựa trên phần cứng ECU (Electronic Control Unit) cần chuyển sang dựa trên yêu cầu và chức năng. Điều này đòi hỏi kiến trúc mở, cùng các module phần mềm có khả năng mở rộng và trao đổi.
 
 {: .note }
->Trong cách tiếp cận cũ, phát triển phần mềm ô tô bắt đầu từ ECU – mỗi ECU được coi là một đơn vị độc lập, với phần mềm được viết riêng lẻ cho từng ECU cụ thể. Điều này dẫn đến:
->- Phần mềm phụ thuộc chặt chẽ vào phần cứng của ECU, khó tái sử dụng.
->- Khó tích hợp khi hệ thống mở rộng (ví dụ: xe có hàng chục ECU kết nối qua mạng như CAN hoặc Ethernet).
+>Trong cách tiếp cận cũ, phát triển phần mềm ô tô bắt đầu từ ECU. Mỗi ECU được coi là một đơn vị độc lập, với phần mềm được viết riêng lẻ cho từng ECU cụ thể. Điều này dẫn đến:
+>- Phần mềm phụ thuộc chặt chẽ vào phần cứng của ECU, dẫn đến khó tái sử dụng.
+>- Khó tích hợp (integrate) khi hệ thống mở rộng (ví dụ: xe có hàng chục ECU kết nối qua mạng như CAN hoặc Ethernet).
 >- Tăng chi phí và thời gian khi phải tùy chỉnh cho từng nhà cung cấp hoặc mẫu xe.
 
-Vì đây là thách thức toàn ngành, nên từ năm 2003, các công ty đã hợp tác trong AUTOSAR để phát triển tiêu chuẩn mở cho kiến trúc E/E. Ý tưởng cốt lõi là tái sử dụng các thành phần phần mềm (software components) để xử lý sự phức tạp ngày càng tăng trong tương lai (về mặt công nghệ và kinh tế).
+Vì đây là thách thức toàn ngành, nên từ năm 2003, nhiều công ty đã hợp tác trong AUTOSAR để phát triển tiêu chuẩn mở cho kiến trúc E/E. Ý tưởng cốt lõi là tái sử dụng các thành phần phần mềm (software components) để xử lý sự phức tạp ngày càng tăng trong tương lai (về mặt công nghệ và kinh tế).
 
 {: .note }
-Các chức năng (như điều khiển ghế sưởi, phanh ABS) được thiết kế dưới dạng thành phần phần mềm (Software Components - SWC) độc lập, có thể tái sử dụng và phân bổ linh hoạt qua nhiều ECU.
+Các chức năng (như điều khiển động cơ, thân xe, phanh ABS) được thiết kế dưới dạng thành phần phần mềm (Software Components - SWC) độc lập, có thể tái sử dụng và phân bổ linh hoạt qua nhiều ECU.
 
 
-Kiến trúc hướng dịch vụ (service-oriented architecture - SOA) mới sẽ được hỗ trợ bởi AUTOSAR. Kỹ thuật này không chỉ tập trung tối ưu hóa từng linh kiện riêng lẻ mà còn ở cấp độ toàn bộ hệ thống.
+Kiến trúc hướng dịch vụ (service-oriented architecture - SOA) mới sẽ được hỗ trợ bởi AUTOSAR. Kỹ thuật này không chỉ tập trung tối ưu hóa từng linh kiện mà còn ở cấp độ toàn bộ hệ thống.
 
 ---
 
 ### Mục tiêu của AUTOSAR
 
-AUTOSAR sẽ trở thành **tiêu chuẩn toàn cầu** được thiết lập cho **phần mềm** và **cách tiếp cận phát triển**, cho phép **open E/E system architectures** phục vụ cho sự di chuyển thông minh trong tương lai, hỗ trợ mức độ tin cậy cao, đặc biệt là an toàn và bảo mật.
+AUTOSAR đặt ra mục tiêu sẽ trở thành **tiêu chuẩn toàn cầu** được thiết lập cho **phần mềm** và **cách tiếp cận phát triển**, cho phép **open E/E system architectures** phục vụ cho sự di chuyển thông minh trong tương lai, hỗ trợ mức độ tin cậy cao, đặc biệt là an toàn và bảo mật.
 
 Mục tiêu chính là tiêu chuẩn hóa các chức năng hệ thống cơ bản và giao diện chức năng. Điều này cho phép các đối tác phát triển tích hợp, trao đổi và chuyển giao các chức năng trong mạng lưới ô tô, đồng thời cải thiện đáng kể việc cập nhật và nâng cấp phần mềm trong suốt vòng đời của xe.
 
@@ -68,7 +72,7 @@ Mục tiêu chính là tiêu chuẩn hóa các chức năng hệ thống cơ b�
     </tr>
     <tr>
       <td>An toàn và độ tin cậy</td>
-      <td>Ô tô là sản phẩm có tính chất ảnh hưởng trực tiếp đến sinh mạng. AUTOSAR tuân thủ các tiêu chuẩn an toàn nghiêm ngặt và góp phần nâng cao độ tin cậy của phần mềm.</td>
+      <td>Ô tô là sản phẩm có tính chất ảnh hưởng trực tiếp đến tính mạng. AUTOSAR tuân thủ các tiêu chuẩn an toàn nghiêm ngặt và góp phần nâng cao độ tin cậy của phần mềm.</td>
     </tr>
     <tr>
       <td>Khả năng mở rộng</td>
@@ -76,7 +80,7 @@ Mục tiêu chính là tiêu chuẩn hóa các chức năng hệ thống cơ b�
     </tr>
     <tr>
       <td>Ứng dụng các công nghệ tương lai</td>
-      <td>Việc triển khai các công nghệ ô tô trong tương lai như lái xe tự động, xe điện và xe kết nối (Connected car) đòi hỏi khả năng tích hợp phần mềm ở mức cao. AUTOSAR cung cấp một nền tảng giúp tích hợp hiệu quả các công nghệ mới này.</td>
+      <td>Việc triển khai các công nghệ ô tô trong tương lai, như lái xe tự động, xe điện và xe kết nối (connected car), đòi hỏi khả năng tích hợp phần mềm ở mức cao. AUTOSAR cung cấp một nền tảng giúp tích hợp hiệu quả các công nghệ mới này.</td>
     </tr>
   </tbody>
 </table>
@@ -90,10 +94,10 @@ Mục tiêu chính là tiêu chuẩn hóa các chức năng hệ thống cơ b�
 
 ### Tổng quan
 
-AUTOSAR là một liên minh toàn cầu gồm các nhà sản xuất OEM (Original Equipment Manufacturer), nhà cung cấp phụ tùng ô tô cấp 1 (Tier 1), các công ty điện tử ô tô, bán dẫn và phần mềm.
+AUTOSAR là một liên minh toàn cầu gồm các nhà sản xuất OEM, nhà cung cấp phụ tùng ô tô cấp 1 (Tier 1 automotive suppliers), các công ty điện tử ô tô, bán dẫn và phần mềm.
 Họ cùng nhau phát triển và thiết lập tiêu chuẩn công nghiệp mở cho kiến trúc E/E ô tô, làm cơ sở hạ tầng cơ bản để quản lý chức năng ứng dụng và module phần mềm tiêu chuẩn.
 
-Liên minh được quản lý bởi các Đối tác cốt lõi (Core Partners), với tổ chức ảo phân tán, ra quyết định dựa trên sự nhất trí.
+Liên minh được quản lý bởi các đối tác cốt lõi (Core Partners), với tổ chức ảo phân tán, ra quyết định dựa trên sự nhất trí.
 Nguồn lực đến từ Core Partners, Premium Partners và Development Partners trên toàn cầu, đòi hỏi quản lý dự án hiệu quả, báo cáo chính xác, đảm bảo chất lượng và giao tiếp minh bạch.
 
 Các công ty quan tâm có thể đăng ký làm Premium Partners hoặc Associate Partners. Development Partners phù hợp cho đóng góp cụ thể vào phát triển công nghệ và thông số kỹ thuật AUTOSAR.
