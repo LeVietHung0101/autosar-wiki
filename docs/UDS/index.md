@@ -91,6 +91,49 @@ Tuy nhiên, trong thực tế, đầu nối OBD-II (SAE J1962) vẫn được s�
 
 ---
 
+# UDS message structure [ISO 14229-1/3]
+
+UDS là một giao thức dựa trên yêu cầu (request based protocol). Hình dưới là một khung yêu cầu UDS (UDS request frame) sử dụng bus **CAN** làm cơ sở:
+
+<figure>
+  <img
+    src="{{ site.baseurl }}\assets\images\UDS_Message_Frame_Can_Bus.svg"
+    alt="UDS request frame sử dụng bus CAN"
+  />
+  <figcaption>UDS request frame sử dụng bus CAN</figcaption>
+</figure>
+
+---
+
+## UDS Service ID (SID)
+
+**UDS Service Identifier (SID)** được dùng để xác định các dịch vụ chẩn đoán cụ thể trong giao thức UDS (ISO 14229).
+
+SID được chia thành 2 loại: request SID và response SID; với **response SID = request SID + 0x40**.
+
+ECU nhận yêu cầu chẩn đoán (chứa request SID) này và trả về phản hồi thích hợp (chứa response SID) cho dịch vụ tương ứng.
+
+
+
+
+---
+
+
+
+## UDS Sub Function Byte 
+
+## UDS 'Request Data Parameters' - incl. Data Identifier (DID)
+
+
+---
+
+# Positive vs. negative UDS responses [ISO 14229-1]
+
+
+
+
+---
+
 # Các khái niệm trong bài viết
 
 - Open Systems Interconnection model (OSI model)
@@ -107,5 +150,7 @@ Tuy nhiên, trong thực tế, đầu nối OBD-II (SAE J1962) vẫn được s�
 - J1939
 - ISOBUS
 - Diagnostic Trouble Code - DTC
+
+https://avtoad.com.ua/en/base/uds-protocol-unified-diagnostic-services
 
 ---
