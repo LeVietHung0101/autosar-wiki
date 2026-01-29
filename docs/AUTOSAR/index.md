@@ -125,11 +125,11 @@ Liên minh AUTOSAR phân loại thành viên theo cấp độ để khuyến kh�
 
 ### Vai trò của các bên trong hệ sinh thái AUTOSAR
 
-**OEM (Original Equipment Manufacturer)**: Là các hãng sản xuất xe như Volkswagen, BMW, Toyota. Họ chịu trách nhiệm tích hợp và tối ưu toàn bộ hệ thống xe, bao gồm mua sắm linh kiện từ nhà cung cấp (Supplier). OEM sử dụng AUTOSAR để chuẩn hóa phần mềm, dễ dàng tích hợp ECU từ nhiều nguồn, giảm phụ thuộc và chi phí chuyển đổi.
+**Original Equipment Manufacturer (OEM)**: Là các hãng sản xuất xe như Volkswagen, BMW, Toyota. Họ chịu trách nhiệm tích hợp và tối ưu toàn bộ hệ thống xe, bao gồm mua sắm linh kiện từ nhà cung cấp (Supplier). OEM sử dụng AUTOSAR để chuẩn hóa phần mềm, dễ dàng tích hợp ECU từ nhiều nguồn, giảm phụ thuộc và chi phí chuyển đổi.
 
-**Tier 1 (Nhà cung cấp cấp 1)**: Cung cấp trực tiếp sản phẩm cho OEM, chủ yếu là ECU – đơn vị điều khiển điện tử. Trước AUTOSAR, phần mềm ECU thiếu chuẩn hóa, dẫn đến khó khăn khi OEM chuyển nhà cung cấp hoặc ngược lại. AUTOSAR giúp Tier 1 như BOSCH hay Continental phát triển ECU với kiến trúc phần mềm thống nhất, dễ trao đổi và tái sử dụng.
+**Tier 1 supplier**: Cung cấp trực tiếp sản phẩm cho OEM, chủ yếu là ECU – đơn vị điều khiển điện tử. Trước AUTOSAR, phần mềm ECU thiếu chuẩn hóa, dẫn đến khó khăn khi OEM chuyển nhà cung cấp hoặc ngược lại. AUTOSAR giúp Tier 1 như BOSCH hay Continental phát triển ECU với kiến trúc phần mềm thống nhất, dễ trao đổi và tái sử dụng.
 
-**Tier 2 (Nhà cung cấp cấp 2)**:Cung cấp trực tiếp cho Tier 1, tập trung vào thành phần cốt lõi của ECU như MCU (Microcontroller), phần mềm tầng thấp (chủ yếu MCAL – Microcontroller Abstraction Layer), hoặc phần cứng hỗ trợ (wireless, crypto). Họ hỗ trợ Tier 1 sản xuất ECU, gián tiếp đóng góp vào tiêu chuẩn AUTOSAR qua chuỗi cung ứng.
+**Tier 2 supplier**:Cung cấp trực tiếp cho Tier 1, tập trung vào thành phần cốt lõi của ECU như MCU (Microcontroller), phần mềm tầng thấp (chủ yếu MCAL – Microcontroller Abstraction Layer), hoặc phần cứng hỗ trợ (wireless, crypto). Họ hỗ trợ Tier 1 sản xuất ECU, gián tiếp đóng góp vào tiêu chuẩn AUTOSAR qua chuỗi cung ứng.
 
 ---
 

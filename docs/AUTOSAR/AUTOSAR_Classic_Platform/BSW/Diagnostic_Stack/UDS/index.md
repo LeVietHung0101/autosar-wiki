@@ -137,7 +137,7 @@ UDS cho phép kiểm soát rộng rãi đối với các ECU của xe.
 Vì lý do bảo mật, các dịch vụ UDS quan trọng sẽ bị hạn chế thông qua quy trình xác thực.
 1. Tester tool (client) gửi một yêu cầu đến ECU (server) để yêu cầu 'seed'.
 1. ECU phản hồi bằng cách gửi một 'seed' đến tester tool.
-1. Tester tool sẽ tạo một 'key' dựa trên 'seed' (bằng thuật toán bí mật) và gửi 'key' này đến ECU.
+1. Tester tool sẽ tạo một 'key' dựa trên 'seed' (bằng thuật toán bảo mật) và gửi 'key' này đến ECU.
 1. Nếu 'key' đúng, ECU sẽ phản hồi rằng 'key' hợp lệ và mở khoá security-level tương ứng.
 1. Mỗi security-level cấp quyền truy cập đến một số dịch vụ UDS quan trọng.
 1. Để duy trì quyền truy cập này, tester tool cần gửi thông báo 'tester present' định kỳ đến ECU.

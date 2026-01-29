@@ -2,6 +2,7 @@
 title: Service Identifier (SID)
 parent: Unified Diagnostic Services (UDS)
 nav_order: 1
+has_children: true
 ---
 
 # Service Identifier (SID)

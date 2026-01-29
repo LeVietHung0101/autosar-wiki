@@ -122,3 +122,26 @@ table {
 @include hover-table-highlight(6);
 
 //#################################################################################################
+
+.decimal-hierarchy {
+  counter-reset: item;
+  list-style: none;
+  padding-left: 1.5em;
+}
+
+.decimal-hierarchy li {
+  counter-increment: item;
+  display: block;
+}
+
+.decimal-hierarchy li::before {
+  content: counters(item, ".") ". ";
+  font-weight: 600;
+}
+
+.decimal-hierarchy ol {
+  counter-reset: item;
+  padding-left: 1.5em;
+}
+
+//#################################################################################################
