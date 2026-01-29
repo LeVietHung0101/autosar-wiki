@@ -1,14 +1,14 @@
 ---
 title: AUTOSAR
-permalink: /AUTOSAR/
 nav_order: 2
+has_children: true
 ---
 
 # AUTOSAR
 
-<strong>Mục lục</strong>
+<!-- <strong>Mục lục</strong>
 1. TOC
-{:toc}
+{:toc} -->
 
 ---
 
@@ -205,7 +205,7 @@ Mặc dù cả Classic AUTOSAR và Adaptive AUTOSAR đều là một phần củ
 </table>
 
 ---
-
+<!-- 
 # Các khái niệm trong bài viết
 
 - Open Electrical/Electronic system architecture
@@ -228,4 +228,9 @@ Mặc dù cả Classic AUTOSAR và Adaptive AUTOSAR đều là một phần củ
 - FuSa - Functional Safety
 - OTA - Over-the-Air
 
----
+
+
+[AUTOSAR](https://www.autosar.org/)
+
+[AUTOSAR_EXP_Introduction_Part1](https://www.autosar.org/fileadmin/user_upload/AUTOSAR_Introduction_PDF/AUTOSAR_EXP_Introduction_Part1.pdf)
+-->

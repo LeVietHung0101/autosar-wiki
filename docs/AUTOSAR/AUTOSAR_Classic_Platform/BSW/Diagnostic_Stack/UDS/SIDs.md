@@ -1,19 +1,19 @@
 ---
-title: SIDs (Service Identifiers)
+title: Service Identifier (SID)
+parent: Unified Diagnostic Services (UDS)
 nav_order: 1
-parent: UDS
 ---
 
-# SIDs (Service Identifiers)
+# Service Identifier (SID)
 
-<strong>Mục lục</strong>
+<!-- <strong>Mục lục</strong>
 1. TOC
-{:toc}
+{:toc} -->
 
 ---
 
 {: .note }
-**UDS Service Identifier (SID)** được dùng để xác định các dịch vụ chẩn đoán cụ thể trong giao thức UDS (ISO 14229).
+**Service Identifier (SID)** được dùng để xác định các dịch vụ chẩn đoán cụ thể trong giao thức UDS (ISO 14229).
 
 SID được chia thành 2 loại: request SID và response SID; với **response SID = request SID + 0x40**.
 

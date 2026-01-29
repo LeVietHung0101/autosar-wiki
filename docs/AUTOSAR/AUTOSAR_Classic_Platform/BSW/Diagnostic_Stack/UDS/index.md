@@ -1,14 +1,15 @@
 ---
-title: UDS
-nav_order: 3
+title: Unified Diagnostic Services (UDS)
+parent: Diagnostic Stack
+nav_order: 1
 has_children: true
 ---
 
 # Unified Diagnostic Services (UDS)
 
-<strong>Mục lục</strong>
+<!-- <strong>Mục lục</strong>
 1. TOC
-{:toc}
+{:toc} -->
 
 ---
 
@@ -146,7 +147,7 @@ Vì lý do bảo mật, các dịch vụ UDS quan trọng sẽ bị hạn chế 
 Trong thực tế, quy trình xác thực này cho phép các OEM đảm bảo ngăn chặn truy cập trái phép từ hacker hoặc công cụ không chính hãng.
 
 ---
-
+<!-- 
 # Các khái niệm trong bài viết
 
 - Open Systems Interconnection model (OSI model)
@@ -162,8 +163,11 @@ Trong thực tế, quy trình xác thực này cho phép các OEM đảm bảo n
 - SAE J1962
 - J1939
 - ISOBUS
-- Diagnostic Trouble Code - DTC
+- Diagnostic Trouble Code - DTC -->
 
-<!-- https://avtoad.com.ua/en/base/uds-protocol-unified-diagnostic-services -->
+<!--
+https://avtoad.com.ua/en/base/uds-protocol-unified-diagnostic-services 
+[UDS Explained - A Simple Intro (Unified Diagnostic Services)](https://www.csselectronics.com/pages/uds-protocol-tutorial-unified-diagnostic-services)
+-->
 
 ---

@@ -1,16 +1,16 @@
 ---
-title: DTCs (Diagnostic Trouble Code)
+title: Diagnostic Trouble Code (DTC)
+parent: Unified Diagnostic Services (UDS)
 nav_order: 3
-parent: UDS
 ---
 
-# DTCs (Diagnostic Trouble Code)
+# Diagnostic Trouble Code (DTC)
 <!-- https://dmv.de.gov/VehicleServices/inspections/pdfs/dtc_list.pdf -->
 <!-- https://www.linkedin.com/pulse/what-dtc-its-types-how-read-truckx-inc-zu6qf -->
 
-<strong>Mục lục</strong>
+<!-- <strong>Mục lục</strong>
 1. TOC
-{:toc}
+{:toc} -->
 
 ---
 
