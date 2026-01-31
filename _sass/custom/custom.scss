@@ -37,6 +37,8 @@ figure img {
   display: block;
   border-radius: 6px;
   max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 figure figcaption {
@@ -123,25 +125,3 @@ table {
 
 //#################################################################################################
 
-.decimal-hierarchy {
-  counter-reset: item;
-  list-style: none;
-  padding-left: 1.5em;
-}
-
-.decimal-hierarchy li {
-  counter-increment: item;
-  display: block;
-}
-
-.decimal-hierarchy li::before {
-  content: counters(item, ".") ". ";
-  font-weight: 600;
-}
-
-.decimal-hierarchy ol {
-  counter-reset: item;
-  padding-left: 1.5em;
-}
-
-//#################################################################################################

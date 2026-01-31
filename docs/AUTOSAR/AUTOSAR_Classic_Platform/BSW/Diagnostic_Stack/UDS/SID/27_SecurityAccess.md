@@ -16,7 +16,7 @@ nav_order: 3
 
 ---
 
-## Service description
+## Mô tả
 
 {: .note }
 Dịch vụ **SecurityAccess (0x27)** cung cấp cơ chế để truy cập dữ liệu hoặc dịch vụ chẩn đoán bị hạn chế do lý do bảo mật, khí thải hoặc an toàn.
@@ -30,105 +30,98 @@ Một số chức năng/dịch vụ chẩn đoán được yêu cầu trong mộ
 
 ---
 
-### Quá trình thực hiện dịch vụ:
+### Quá trình thực hiện:
 
-1. Client yêu cầu 'seed' từ server.
+1. Client request 'seed' từ server.
 2. Server gửi 'seed'.
 3. Client tính toán và gửi 'key' tương ứng.
 4. Server kiểm tra 'key' (so sánh với một giá trị được lưu trữ/tính toán nội bộ):
-    1. Nếu 'key' khớp, server mở khóa (unlock) quyền truy cập của client vào các dịch vụ/dữ liệu cụ thể.
-    2. Nếu 'key' không khớp, server xem đây là một lần truy cập thất bại.
+    1. Nếu 'key' đúng, server mở khóa (unlock) quyền truy cập của client vào các dịch vụ/dữ liệu cụ thể.
+    2. Nếu 'key' không đúng, server xem đây là một lần truy cập thất bại.
 
 ---
 
-### Chỉ hỗ trợ một security level tại một thời điểm
+## Server chỉ hỗ trợ một security level tại một thời điểm
 
-Các security level được xác định bởi giá trị của sub-function.
-Việc đánh số các security level là tùy ý và không ngụ ý bất kỳ mối quan hệ nào giữa chúng.
+Một khi một security level được mở khoá, nó phải vẫn được mở khóa ngay cả sau khi server nhận request 'seed' cho một security level khác.
+Nó chỉ bị khoá khi một security level mới được mở khóa hoặc SecurityAccess bị thoát vì lý do khác (ví dụ: DiagnosticSessionControl được chấp nhận hoặc timeout session xảy ra).
 
-##### Yêu cầu security level KHÁC với security level đang hoạt động
+### Yêu cầu security level KHÁC với security level đang hoạt động
 
-Nếu security level liên quan đến requestSeed **0x03** đang hoạt động và yêu cầu từ tester thành công trong việc mở khóa security level liên quan đến requestSeed **0x01** thì:
+Nếu security level liên quan đến requestSeed **0x03** đang hoạt động và yêu cầu từ client thành công trong việc mở khóa security level liên quan đến requestSeed **0x01** thì:
 - Bất kỳ chức năng bảo mật bổ sung nào trước đó đã được mở khóa bởi security level liên quan đến requestSeed **0x03** sẽ không còn hoạt động nữa.
 - Chỉ các chức năng bảo mật được hỗ trợ bởi security level liên quan đến requestSeed **0x01** mới được mở khóa tại thời điểm đó.
 
-##### Yêu cầu security level TRÙNG với security level đang hoạt động
+### Yêu cầu security level TRÙNG với security level đang hoạt động
 
 Nếu client yêu cầu mở khoá một security level đã được mở khoá, server sẽ gửi positive response với 'seed' = 0x00.
 
-Server không bao giờ được gửi một seed toàn bộ là 0x00 cho một security level đang bị khóa.
+Server không bao giờ được gửi một 'seed' toàn bộ là 0x00 cho một security level đang bị khóa.
 Do đó, client sẽ biết được một security level cụ thể có bị khoá hay không bằng cách so sánh 'seed' với 0x00.
 
 ---
 
-### Cơ chế khi truy cập thất bại
+## Cơ chế khi truy cập thất bại
 
 Server có thể kích hoạt một thời gian delay (**Delay_Timer**) sau khi power-up/reset hoặc sau nhiều lần truy cập thất bại (**Att_Cnt**).
-Delay_Timer và Att_Cnt (Attempts Counter) đều do OEM quy định.
+Trong khoảng thời gian delay này, các dịch vụ SecurityAccess từ client sẽ bị server từ chối thông qua negative response (NRC 0x37).
+Điều này sẽ không ảnh hưởng đến giao tiếp/dịch vụ chẩn đoán thông thường.
 
-Trong thời gian delay này, các dịch vụ SecurityAccess từ client sẽ bị server từ chối thông qua negative response (NRC 0x37); điều này sẽ không ảnh hưởng đến giao tiếp/dịch vụ chẩn đoán thông thường.
-
-Nếu Delay_Timer được hỗ trợ bởi OEM, **Server sẽ kích hoạt Delay_Timer khi**:
-1. Đạt đến số lần truy cập thất bại (**Att_Cnt**).
+**Server sẽ kích hoạt Delay_Timer** (nếu được OEM hỗ trợ) khi:
+1. Đạt đến số lần truy cập thất bại.
 2. Server được power-up/reset và một dịch vụ SecurityAccess trước đó đã thất bại một lần duy nhất <i>hoặc</i> không thể xác định có thất bại hay không.
     - Nếu dịch vụ SecurityAccess tiếp theo thành công, thì thông tin chỉ báo nội bộ của server cho việc kích hoạt timer delay khi bật nguồn/reset phải được xóa bởi server.
 
+{: .note }
+>Nhiều team/công ty khác nhau sẽ chịu trách nhiệm về firmware của FBL và APP,
+>dẫn đến sự **khác nhau về security level giữa các firmware** này (số lượng security được hỗ trợ, số lượng dịch vụ và loại dịch vụ được hỗ trợ trong security level cụ thể);
+>thậm chí là **khác nhau về cách triển khai** (Delay_Timer, Att_Cnt, thuật toán nội bộ, giá trị 'key' lưu nội bộ,...).
 
-
-<!-- Một thời gian delay cụ thể của nhà sản xuất xe có thể được yêu cầu trước khi server có thể phản hồi tích cực đối với thông điệp dịch vụ SecurityAccess 'requestSeed' từ client sau khi server bật nguồn/reset và sau một số lần truy cập sai nhất định (xem mô tả thêm bên dưới).
-
-Nếu timer delay này được hỗ trợ, thì delay phải được kích hoạt sau khi đạt đến số lần truy cập sai được quy định bởi nhà sản xuất xe hoặc khi server được bật nguồn/reset và một dịch vụ SecurityAccess trước đó đã thất bại do một lần truy cập sai duy nhất.
-
-Trong trường hợp server hỗ trợ timer delay này, thì sau khi thực hiện thành công dịch vụ SecurityAccess 'sendKey', thông tin chỉ báo nội bộ của server cho việc kích hoạt timer delay khi bật nguồn/reset phải được xóa bởi server. Trong trường hợp server hỗ trợ timer delay này và không thể xác định xem dịch vụ SecurityAccess trước đó trước khi bật nguồn/reset có thất bại hay không, thì timer delay phải luôn hoạt động sau khi bật nguồn/reset. Delay chỉ được yêu cầu nếu server bị khóa khi bật nguồn/reset. Nhà sản xuất xe phải chọn xem timer delay có được hỗ trợ hay không. -->
-
-<!-- A vehicle manufacturer specific time delay may be required before the server can positively respond to a
-service SecurityAccess ‘requestSeed’ message from the client after server power up/reset and after a certain
-number of false access attempts (see further description below).
-
-If this delay timer is supported then the delay shall be activated after a vehicle manufacturer specified number of false access attempts has been reached or when the server is powered up/reset and a previously performed SecurityAccess service has failed due to a single false access attempt.
-
-In case the server supports this delay timer then after a successful
-SecurityAccess service 'sendKey' execution the server internal indication information for a delay timer
-invocation on a power up/reset shall be cleared by the server.
-
-In case the server supports this delay timer and
-cannot determine if a previously performed SecurityAccess service prior to the power up/reset has failed then
-the delay timer shall always be active after power up/reset. The delay is only required if the server is locked
-when powered up/reset. The vehicle manufacturer shall select if the delay timer is supported.  -->
-
-<!-- Nếu server đã mở khóa security level, nó sẽ gửi seed = 0x00.  Truy cập bảo mật không ảnh hưởng đến giao tiếp thông thường.
-Dịch vụ này thường dùng trong session chẩn đoán cụ thể, theo thứ tự: DiagnosticSessionControl → SecurityAccess → Dịch vụ bảo mật. -->
-
-
----
-
-## Request message
-
-Bảng sau mô tả các data-parameter dùng trong request message:
 
 <table class="hover-table">
   <thead>
     <tr>
-      <th>Data-parameter</th>
+      <th>Parameter</th>
       <th>Mô tả</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>securityAccessDataRecord</strong></td>
-      <td>Tuỳ chọn của người dùng để truyền dữ liệu đến server khi client yêu cầu 'seed'.<br>
-          Ví dụ: Nó có thể chứa thông tin nhận dạng (identification) của client được xác minh trên server.</td>
+      <td><strong>Delay_Timer</strong></td>
+      <td>Thời gian chờ tối thiểu giữa các lần thử truy cập an ninh.<br>
+          Server có thể chọn triển khai một timer riêng cho mỗi security level hoặc sử dụng một timer duy nhất cho tất cả các security level.<br>
+          Nó có thể mang giá trị cố định hoặc thay đổi dựa vào số lần truy cập sai 'Att_Cnt' (tuỳ thuộc vào OEM).<br>
+          Timer này có thể được kích hoạt sau mỗi lần power-up/reset (tuỳ thuộc vào OEM).
+      </td>
     </tr>
     <tr>
-      <td><strong>securityKey</strong></td>
-      <td>Giá trị 'key' được tạo bởi thuật toán bảo mật tương ứng với một giá trị 'seed' cụ thể.</td>
+      <td><strong>Att_Cnt</strong></td>
+      <td>Số lần truy cập an ninh sai trước khi chèn (insert) thời gian delay (Start_Delay).<br>
+          Att_Cnt được lưu trong non-volatile memory.<br>
+          Khi triển khai, bộ đếm này là bắt buộc cho từng security level riêng lẻ.<br>
+          Nếu server nhận 'key' đúng, Att_Cnt được reset về 0.<br>
+          Nó có thể dùng để quyết định sau reset liệu có cần bắt đầu Delay_Timer hay không.<br>
+          Giá trị của Delay_Timer có thể phụ thuộc vào Att_Cnt.<br>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Att_Cnt_Limit</strong></td>
+      <td>Số lần truy cập an ninh sai tối đa</td>
+    </tr>
+    <tr>
+      <td><strong>Static_Seed</strong><br>(boolean)</td>
+      <td><strong>True:</strong> seed được lưu trữ nội bộ (tạm thời) trong server và sử dụng lại (re-used) trong positive response của request seed cho từng security level;
+          nhằm tối ưu xử lý request 'seed' lặp lại từ client. Seed này sẽ bị xoá khi server nhận 'key' hợp lệ (mở khoá security level) hoặc ECU power-down/reset.<br><br>
+          <strong>False:</strong> seed ngẫu nhiên được sử dụng mỗi khi nhận request 'seed' mới.<br><br>
+          Nếu Delay_Timer và Att_Cnt không được hỗ trợ bởi OEM, seed ngẫu nhiên phải luôn được sử dụng.
+      </td>
     </tr>
   </tbody>
 </table>
 
-Các giá trị sub-function cũng dùng để xác định security level được kích hoạt (tại một thời điểm).
-- **requestSeed**: luôn là số lẻ (0x01, 0x03, ..., 0x7D).
-- **sendKey** = requestSeed + 1: luôn là số chẵn (0x02, 0x04,..., 0x7E).
+---
+
+## Request message
 
 #### sub-function = requestSeed
 
@@ -142,17 +135,17 @@ Các giá trị sub-function cũng dùng để xác định security level đư�
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
+      <td>#1</td>
       <td>SID</td>
       <td>0x27</td>
     </tr>
     <tr>
-      <td>2</td>
+      <td>#2</td>
       <td>sub-function = [ securityAccessType = <strong>requestSeed</strong> ]</td>
       <td>0x01, 0x03, ..., 0x7D</td>
     </tr>
     <tr>
-      <td>3..n</td>
+      <td>#3 .. #n</td>
       <td>securityAccessDataRecord[]</td>
       <td></td>
     </tr>
@@ -171,31 +164,39 @@ Các giá trị sub-function cũng dùng để xác định security level đư�
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
+      <td>#1</td>
       <td>SID</td>
       <td>0x27</td>
     </tr>
     <tr>
-      <td>2</td>
+      <td>#2</td>
       <td>sub-function = [ securityAccessType = <strong>sendKey</strong> ]</td>
       <td>0x02, 0x04,..., 0x7E</td>
     </tr>
     <tr>
-      <td>3..n</td>
+      <td>#3 .. #n</td>
       <td>securityKey[]</td>
       <td></td>
     </tr>
   </tbody>
 </table>
 
----
 
-### Request message sub-function parameter $Level (LEV_) definition
+Các giá trị sub-function cũng dùng để xác định security level được kích hoạt (tại một thời điểm).<br>
+>sub-function = [SPRMIB] [securityAccessType]
 
+Trong đó
+- **SPRMIB** nằm ở bit thứ 7.
+- **securityAccessType** gồm các bit 6 - 0, là requestSeed hoặc sendKey (tuỳ vào loại dịch vụ).
+  - **requestSeed**: luôn là số lẻ (0x01, 0x03, ..., 0x7D).
+  - **sendKey** = requestSeed + 1: luôn là số chẵn (0x02, 0x04,..., 0x7E).
 
+Các data-parameter:
+- **securityAccessDataRecord**: Tuỳ chọn của người dùng để truyền dữ liệu đến server khi client request 'seed'. Ví dụ: Nó có thể chứa thông tin nhận dạng (identification) của client được xác minh trên server.
+- **securityKey**: Giá trị 'key' được tạo bởi thuật toán bảo mật tương ứng với một giá trị 'seed' cụ thể.
 
-#### sub-function
-
+Bảng sau mô tả ý nghĩa của sub-function dựa vào securityAccessType (bỏ qua SPRMIB).
+Việc đánh số các security level là tùy ý và không ngụ ý bất kỳ mối quan hệ nào giữa chúng.
 
 <table class="hover-table">
   <thead>
@@ -214,12 +215,12 @@ Các giá trị sub-function cũng dùng để xác định security level đư�
     <tr>
       <td>0x01, 0x03 – 0x41</td>
       <td>requestSeed</td>
-      <td>Yêu cầu 'seed' với mức độ bảo mật được định nghĩa bởi OEM.</td>
+      <td>Yêu cầu 'seed' với security level được định nghĩa bởi OEM.</td>
     </tr>
     <tr>
       <td>0x02, 0x04 – 0x42</td>
       <td>sendKey</td>
-      <td>Gửi 'key' với mức độ bảo mật được định nghĩa bởi OEM.</td>
+      <td>Gửi 'key' với security level được định nghĩa bởi OEM.</td>
     </tr>
     <tr>
       <td>0x43 – 0x5E</td>
@@ -229,12 +230,12 @@ Các giá trị sub-function cũng dùng để xác định security level đư�
     <tr>
       <td>0x5F</td>
       <td>ISO26021-2 values</td>
-      <td></td>
+      <td>Yêu cầu 'seed' với security level đặc biệt, dành cho việc kích hoạt an toàn các thiết bị pyrotechnic khi xe hết hạn sử dụng (theo ISO 26021-2).</td>
     </tr>
     <tr>
       <td>0x60</td>
       <td>ISO26021-2 sendKey values</td>
-      <td></td>
+      <td>Gửi 'key' tương ứng với requestSeed 0x5F</td>
     </tr>
     <tr>
       <td>0x61 – 0x7E</td>
@@ -249,21 +250,123 @@ Các giá trị sub-function cũng dùng để xác định security level đư�
   </tbody>
 </table>
 
+Ghi chú:
+- **ISO 26021-2:2008** (Road vehicles — End-of-life activation of on-board pyrotechnic devices — Part 2: Communication requirements) là tiêu chuẩn quốc tế về kích hoạt các thiết bị pyrotechnic trên xe hơi ở giai đoạn kết thúc vòng đời (end-of-life, ví dụ: khi xe bị loại bỏ, tháo dỡ hoặc tái chế).
+- **Thiết bị pyrotechnic**: các bộ phận an toàn sử dụng một lượng nhỏ thuốc nổ hoặc nhiên liệu rắn để tạo phản ứng cháy/nổ tức thì, kích hoạt cơ chế bảo vệ trong vài phần nghìn giây. Chúng được dùng phổ biến để thổi túi khí (airbags), siết chặt dây an toàn (seatbelt pretensioners) khi va chạm hoặc ngắt cầu chì cao áp (Pyro Fuse) trên xe điện. Những thiết bị này cần kích hoạt an toàn để tránh tai nạn khi tháo dỡ xe (ví dụ: kích hoạt từ xa để xả hết năng lượng trước khi cắt dây).
+
 ---
 
 ## Positive response message
 
-### Positive response message definition
+<table class="hover-table">
+  <thead>
+    <tr>
+      <th>Data byte</th>
+      <th>Parameter Name</th>
+      <th>Byte Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>#1</td>
+      <td>SID</td>
+      <td>0x67</td>
+    </tr>
+    <tr>
+      <td>#2</td>
+      <td>sub-function = [ securityAccessType ]</td>
+      <td>0x00 - 0x7F</td>
+    </tr>
+    <tr>
+      <td>#3 .. #n</td>
+      <td>securitySeed[]</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-### Positive response message data-parameter definition
+**securitySeed[]** là giá trị được server gửi đi và được client sử dụng khi tính toán 'key' cần thiết để truy cập bảo mật.
+Bắt buộc có trong response message nếu securityAccessType = requestSeed.
+
+## Ví dụ
+
+1. Tester tool request 'seed' từ ECU bằng UDS request [27 01].
+2. ECU phản hồi bằng securitySeed = [DE AD BE EF].
+3. Tester tool gửi securityKey = [C0 FF EE].
+4. ECU xác nhận 'key' đúng và cấp quyền truy cập.
+
+<figure>
+  <img
+    src="{{ site.baseurl }}\assets\images\27_SecurityAccess\udscomm2.svg"
+    alt="Quy trình SecurityAccess khi server ở trạng thái locked"
+  />
+</figure>
 
 ---
 
-## Supported negative response codes (NRC_)
+## Supported NRC
+
+
+<table class="hover-table">
+  <thead>
+    <tr>
+      <th>NRC</th>
+      <th>Use case</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x12</td>
+      <td>sub-functionNotSupported</td>
+      <td>Server không hỗ trợ security level được yêu cầu trong request 'requestSeed'</td>
+    </tr>
+    <tr>
+      <td>0x13</td>
+      <td>incorrectMessageLengthOrInvalidFormat</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>0x22</td>
+      <td>conditionsNotCorrect</td>
+      <td>Các điều kiện cho dịch vụ SecurityAccess không được đáp ứng<br>
+          (ví dụ: nhiệt độ, điện áp,...).</td>
+    </tr>
+    <tr>
+      <td>0x24</td>
+      <td>requestSequenceError</td>
+      <td><strong>#1.</strong> Request 'sendKey' được gửi nhưng trước đó không có request 'requestSeed';<br>
+          <strong>#2.</strong> Request 'sendKey' được gửi khi server đã mở khoá security level tương ứng;<br>
+          <strong>#3.</strong> Sub-function của request 'sendKey' không khớp với sub-function của request 'requestSeed' (yy != xx + 1)</td>
+    </tr>
+    <tr>
+      <td>0x31</td>
+      <td>requestOutOfRange</td>
+      <td>securityAccessDataRecord[] chứa invalid data<br>(ví dụ: ID client sai, hoặc dữ liệu xác thực không khớp)</td>
+    </tr>
+    <tr>
+      <td>0x35</td>
+      <td>invalidKey</td>
+      <td>Khi giá trị 'key' trong request 'sendKey' không khớp với giá trị được lưu trữ/tính toán nội bộ của server,
+          và <strong>(Att_Cnt+1) < Att_Cnt_Limit</strong> (chưa đạt giới hạn số lần truy cập sai),
+          server sẽ tăng Att_Cnt</td>
+    </tr>
+    <tr>
+      <td>0x36</td>
+      <td>exceededNumberOfAttempts</td>
+      <td>Khi giá trị 'key' trong request 'sendKey' không khớp với giá trị được lưu trữ/tính toán nội bộ của server,
+          và <strong>(Att_Cnt+1) >= Att_Cnt_Limit</strong> (đạt giới hạn số lần truy cập sai),
+          server sẽ tăng Att_Cnt và kích hoạt Delay_Timer</td>
+    </tr>
+    <tr>
+      <td>0x37</td>
+      <td>requiredTimeDelayNotExpired</td>
+      <td>Client gửi request 'requestSeed' nhưng server đã kích hoạt Delay_Timer và chưa hết thời gian chờ</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
-
-## Tình huống ví dụ
 
 ---
 
@@ -277,11 +380,74 @@ Các giá trị sub-function cũng dùng để xác định security level đư�
   <figcaption>SecurityAccess State Chart</figcaption>
 </figure>
 
-Các trạng thái (state) chính:
-- **(A)**: Tất cả các security level bị khóa. Không có seed hoạt động.
-- **(B)**: Tất cả các security level bị khóa. Seed đã gửi. Đang chờ key.
-- **(C)**: Một security level được mở khóa. Không có seed hoạt động.
-- **(D)**: Một security level được mở khóa. Seed đã gửi. Đang chờ key.
+---
+
+### Cách trường hợp tăng Att_Cnt
+
+<table class="hover-table">
+  <thead>
+    <tr>
+      <th>State transitions</th>
+      <th>Condition</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>9, 10</td>
+      <td>SecurityAccess sendKey received.<br>
+          sub-function: yy == xx+1.<br>
+          Message length OK.<br>
+          Key NOK.<br>
+          (Att_Cnt+1) < Att_Cnt_Limit.
+      </td>
+      <td>Att_Cnt++ for sub-function xx.<br>
+          Store Att_Cnt in non-volatile memory.<br>
+          Transmit negative response NRC 0x35.
+      </td>
+    </tr>
+    <tr>
+      <td>9, 10</td>
+      <td>SecurityAccess sendKey received.<br>
+          sub-function: yy == xx+1.<br>
+          Message length OK.<br>
+          Key NOK.<br>
+          (Att_Cnt+1) >= Att_Cnt_Limit.
+      </td>
+      <td>Att_Cnt++ for sub-function xx.<br>
+          Start <strong>Delay_Timer</strong> for sub-function xx.<br>
+          Store Att_Cnt in non-volatile memory.<br>
+          Transmit negative response NRC 0x36.
+      </td>
+    </tr>
+    <tr>
+      <td>9, 10</td>
+      <td>SecurityAccess sendKey received.<br>
+          sub-function: yy <> xx+1.
+      </td>
+      <td>Transmit negative response NRC 0x24.<br>
+          Store Att_Cnt in non-volatile memory.<br>
+          Att_Cnt++ for sub-function xx (nếu State transitions = 9).
+      </td>
+    </tr>
+    <tr>
+      <td>9, 10</td>
+      <td>SecurityAccess sendKey received.<br>
+          sub-function: yy == xx+1.<br>
+          Message length NOK.
+      </td>
+      <td>Transmit negative response NRC 0x13.<br>
+          Store Att_Cnt in non-volatile memory.<br>
+          Att_Cnt++ for sub-function xx (nếu State transitions = 9).
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+Ghi chú:
+- **xx**: requestSeed securityAccessType *cuối cùng* mà server nhận.
+- **yy**: requestSeed securityAccessType *hiện tại* mà server nhận.
+- **NOK**: Not OK.
 
 <!-- Các chuyển trạng thái (state transitions):
 No. 1 (Không có Operation cụ thể):
@@ -298,7 +464,7 @@ Action: Att_Cnt = 0 cho sub-function xx (nếu áp dụng). Lưu Att_Cnt vào b�
 
 No. 4 (Operation: OR - Một trong các điều kiện đúng):
 Condition:
-Nhận SecurityAccess requestSeed, độ dài thông điệp NOK (Not OK) → Gửi NRC 0x13.
+Nhận SecurityAccess requestSeed,độ dài thông điệp NOK (Not OK) → Gửi NRC 0x13.
 Nhận SecurityAccess sendKey → Gửi NRC 0x24.
 Các điều kiện tùy chọn KHÔNG đáp ứng (optional pre-conditions NOT fulfilled) → Gửi NRC 0x22.
 Delay chưa hết hạn (nếu áp dụng) → Gửi NRC 0x37.
@@ -347,3 +513,11 @@ https://www.linkedin.com/pulse/security-access-mechanism-ecus-using-uds-guide-im
 
 
  -->
+
+
+<!-- 
+ [?]
+ [1] "thông tin chỉ báo nội bộ của server cho việc kích hoạt timer delay khi bật nguồn/reset" có tên là gì? được lưu ở đâu?
+
+ 
+  -->
