@@ -74,7 +74,7 @@ Trong khoảng thời gian delay này, các dịch vụ SecurityAccess từ clie
 
 {: .note }
 >Nhiều team/công ty khác nhau sẽ chịu trách nhiệm về firmware của FBL và APP,
->dẫn đến sự **khác nhau về security level giữa các firmware** này (số lượng security được hỗ trợ, số lượng dịch vụ và loại dịch vụ được hỗ trợ trong security level cụ thể);
+>dẫn đến sự **khác nhau về security level giữa các firmware** này (số lượng security được hỗ trợ, số lượng dịch vụ và loại dịch vụ được hỗ trợ trong từng security level cụ thể);
 >thậm chí là **khác nhau về cách triển khai** (Delay_Timer, Att_Cnt, thuật toán nội bộ, giá trị 'key' lưu nội bộ,...).
 
 
@@ -192,8 +192,8 @@ Trong đó
   - **sendKey** = requestSeed + 1: luôn là số chẵn (0x02, 0x04,..., 0x7E).
 
 Các data-parameter:
-- **securityAccessDataRecord**: Tuỳ chọn của người dùng để truyền dữ liệu đến server khi client request 'seed'. Ví dụ: Nó có thể chứa thông tin nhận dạng (identification) của client được xác minh trên server.
-- **securityKey**: Giá trị 'key' được tạo bởi thuật toán bảo mật tương ứng với một giá trị 'seed' cụ thể.
+- **securityAccessDataRecord[]**: Tuỳ chọn của người dùng để truyền dữ liệu đến server khi client request 'seed'. Ví dụ: Nó có thể chứa thông tin nhận dạng (identification) của client được xác minh trên server.
+- **securityKey[]**: Giá trị 'key' được tạo bởi thuật toán bảo mật tương ứng với một giá trị 'seed' cụ thể.
 
 Bảng sau mô tả ý nghĩa của sub-function dựa vào securityAccessType (bỏ qua SPRMIB).
 Việc đánh số các security level là tùy ý và không ngụ ý bất kỳ mối quan hệ nào giữa chúng.
@@ -210,7 +210,7 @@ Việc đánh số các security level là tùy ý và không ngụ ý bất k�
     <tr>
       <td>0x00</td>
       <td>ISOSAEReserved</td>
-      <td></td>
+      <td>Dành cho tương lai.</td>
     </tr>
     <tr>
       <td>0x01, 0x03 – 0x41</td>
@@ -230,7 +230,7 @@ Việc đánh số các security level là tùy ý và không ngụ ý bất k�
     <tr>
       <td>0x5F</td>
       <td>ISO26021-2 values</td>
-      <td>Yêu cầu 'seed' với security level đặc biệt, dành cho việc kích hoạt an toàn các thiết bị pyrotechnic khi xe hết hạn sử dụng (theo ISO 26021-2).</td>
+      <td>Request 'seed' với security level đặc biệt, dành cho việc kích hoạt an toàn các thiết bị pyrotechnic khi xe hết hạn sử dụng (theo ISO 26021-2).</td>
     </tr>
     <tr>
       <td>0x60</td>
@@ -297,7 +297,7 @@ Bắt buộc có trong response message nếu securityAccessType = requestSeed.
 
 <figure>
   <img
-    src="{{ site.baseurl }}\assets\images\27_SecurityAccess\udscomm2.svg"
+    src="{{ site.baseurl }}\assets\images\27_SecurityAccess\SecurityAccess_example.svg"
     alt="Quy trình SecurityAccess khi server ở trạng thái locked"
   />
 </figure>
@@ -374,8 +374,9 @@ Bắt buộc có trong response message nếu securityAccessType = requestSeed.
 
 <figure>
   <img
-    src="{{ site.baseurl }}\assets\images\SecurityAccess_State_Chart.png"
+    src="{{ site.baseurl }}\assets\images\27_SecurityAccess\SecurityAccess_State_Chart.png"
     alt="SecurityAccess State Chart"
+    width="75%"
   />
   <figcaption>SecurityAccess State Chart</figcaption>
 </figure>
@@ -446,78 +447,5 @@ Bắt buộc có trong response message nếu securityAccessType = requestSeed.
 
 Ghi chú:
 - **xx**: requestSeed securityAccessType *cuối cùng* mà server nhận.
-- **yy**: requestSeed securityAccessType *hiện tại* mà server nhận.
+- **yy**: sendKey securityAccessType *hiện tại* mà server nhận.
 - **NOK**: Not OK.
-
-<!-- Các chuyển trạng thái (state transitions):
-No. 1 (Không có Operation cụ thể):
-Condition: Khởi động/khởi động lại ứng dụng ECU (ví dụ: ECU reset, power cycle, key cycle, chuyển từ sleep sang wake).
-Action: Khởi tạo Att_Cnt (nếu áp dụng). Bắt đầu Delay_Timer (nếu yêu cầu khi khởi động).
-
-No. 2 (Operation: AND - Các điều kiện phải đồng thời đúng):
-Condition: Nhận SecurityAccess requestSeed. Độ dài thông điệp OK. Các điều kiện tùy chọn được đáp ứng (optional pre-conditions fulfilled).
-Action: Nếu Static_Seed == True thì tạo và lưu seed cho securityAccessType yêu cầu (nếu chưa tạo trong chu kỳ ECU hiện tại); nếu False thì tạo seed mới. Lưu sub-function: xx = securityAccessType. Gửi phản hồi tích cực SecurityAccess với seed hoạt động cho securityAccessType yêu cầu.
-
-No. 3 (Operation: AND):
-Condition: Nhận SecurityAccess sendKey. Sub-function: yy == xx+1 (key tương ứng với seed trước). Độ dài thông điệp OK. Key OK.
-Action: Att_Cnt = 0 cho sub-function xx (nếu áp dụng). Lưu Att_Cnt vào bộ nhớ non-volatile (nếu áp dụng). Mở khóa security level cho sub-function xx. Nếu Static_Seed == True thì xóa seed đã tạo cho sub-function xx. Gửi phản hồi tích cực SecurityAccess cho sendKey.
-
-No. 4 (Operation: OR - Một trong các điều kiện đúng):
-Condition:
-Nhận SecurityAccess requestSeed,độ dài thông điệp NOK (Not OK) → Gửi NRC 0x13.
-Nhận SecurityAccess sendKey → Gửi NRC 0x24.
-Các điều kiện tùy chọn KHÔNG đáp ứng (optional pre-conditions NOT fulfilled) → Gửi NRC 0x22.
-Delay chưa hết hạn (nếu áp dụng) → Gửi NRC 0x37.
-SecurityAccess yêu cầu dẫn đến phản hồi tiêu cực tổng quát (theo phần 7.5) → Gửi NRC tương ứng.
-
-Action: Tùy theo condition, gửi phản hồi tiêu cực tương ứng (NRC 0x13, 0x24, 0x22, 0x37, hoặc theo 7.5).
-
-No. 5 (Operation: OR - Nhiều trường hợp):
-Condition & Action (các trường hợp riêng):
-Nhận requestSeed, tạo seed mới và gửi phản hồi tích cực (nếu Static_Seed == False hoặc không có seed lưu).
-Nhận requestSeed, gửi seed lưu sẵn (nếu Static_Seed == True và có seed hoạt động).
-Nhận requestSeed với securityAccessType khác trước, tạo seed mới (nếu Static_Seed == True).
-Các trường hợp khác: Gửi phản hồi với seed zero nếu đã mở khóa, hoặc xử lý delay/Att_Cnt.
-
-
-No. 6 (Không có Operation):
-Condition: DiagnosticSessionControl được chấp nhận hoặc session timeout xảy ra.
-Action: Bắt đầu session chẩn đoán phù hợp. Khóa ECU.
-
-No. 7 (Operation: OR):
-Condition: Nhận sendKey/requestSeed và mức yêu cầu đã mở khóa.
-Action: Gửi NRC 0x24 (nếu sendKey) hoặc phản hồi với seed zero (nếu requestSeed). Hoặc gửi NRC tổng quát theo 7.5.
-
-No. 8 (Operation: AND):
-Condition: Nhận requestSeed, mức yêu cầu CHƯA mở khóa, độ dài OK, điều kiện tùy chọn đáp ứng, delay hết hạn.
-Action: Tạo và lưu seed (nếu chưa có). Lưu xx = securityAccessType. Gửi phản hồi tích cực với seed hoạt động.
-
-No. 9 (Operation: OR - Nhiều trường hợp xử lý key sai hoặc lỗi):
-Condition & Action (các trường hợp):
-Key NOK, Att_Cnt chưa vượt giới hạn → Att_Cnt++, lưu vào non-volatile, gửi NRC 0x35.
-Key NOK, Att_Cnt vượt giới hạn → Att_Cnt++, bắt đầu Delay_Timer, gửi NRC 0x36.
-Sub-function yy != xx+1 → Gửi NRC 0x24.
-Độ dài NOK → Gửi NRC 0x13.
-Các phản hồi tiêu cực tổng quát → Gửi NRC theo 7.5.
-
-
-No. 10 (Operation: AND):
-Condition: DiagnosticSessionControl được chấp nhận hoặc session timeout.
-Action: Bắt đầu session chẩn đoán phù hợp. Khóa tất cả security level (lock ECU). -->
-
-<!-- 
-
-https://munich.dissec.to/kb/chapters/hydravision/TestCases/SecurityAccess.html
-
-https://www.linkedin.com/pulse/security-access-mechanism-ecus-using-uds-guide-imane-bougrine-5kkhe
-
-
- -->
-
-
-<!-- 
- [?]
- [1] "thông tin chỉ báo nội bộ của server cho việc kích hoạt timer delay khi bật nguồn/reset" có tên là gì? được lưu ở đâu?
-
- 
-  -->
