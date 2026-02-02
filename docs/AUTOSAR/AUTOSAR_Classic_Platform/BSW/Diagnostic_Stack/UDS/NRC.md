@@ -1,14 +1,17 @@
 ---
-title: Negative Response Code (NRC)
-parent: Unified Diagnostic Services (UDS)
+title: NRC
+parent: UDS
 nav_order: 2
 ---
 
 # Negative Response Code (NRC)
 
-<!-- <strong>Mục lục</strong>
+<details markdown="block">
+  <summary>Mục lục</summary>
+  {: .text-delta }
 1. TOC
-{:toc} -->
+{:toc}
+</details>
 
 ---
 

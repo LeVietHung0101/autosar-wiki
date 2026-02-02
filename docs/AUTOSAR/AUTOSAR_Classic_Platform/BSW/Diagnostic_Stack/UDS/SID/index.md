@@ -1,15 +1,18 @@
 ---
-title: Service Identifier (SID)
-parent: Unified Diagnostic Services (UDS)
+title: SID
+parent: UDS
 nav_order: 1
 has_children: true
 ---
 
 # Service Identifier (SID)
 
-<!-- <strong>Mục lục</strong>
+<details markdown="block">
+  <summary>Mục lục</summary>
+  {: .text-delta }
 1. TOC
-{:toc} -->
+{:toc}
+</details>
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: Unified Diagnostic Services (UDS)
+title: UDS
 parent: Diagnostic Stack
 nav_order: 1
 has_children: true
@@ -7,9 +7,12 @@ has_children: true
 
 # Unified Diagnostic Services (UDS)
 
-<!-- <strong>Mục lục</strong>
+<details markdown="block">
+  <summary>Mục lục</summary>
+  {: .text-delta }
 1. TOC
-{:toc} -->
+{:toc}
+</details>
 
 ---
 
