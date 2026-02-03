@@ -15,9 +15,9 @@ nav_order: 2
 
 ---
 
-**Negative Response Code (NRC)**: là mã được sử dụng trong giao thức truyền thông chẩn đoán của xe, do **ECU phản hồi cho tester tool** khi một yêu cầu chẩn đoán cụ thể thất bại hoặc không thể xử lý.
+**Negative Response Code (NRC)**: là mã lỗi (HEX) được sử dụng trong giao thức truyền thông chẩn đoán của xe, do **ECU phản hồi cho tester tool** khi một yêu cầu chẩn đoán cụ thể thất bại hoặc không thể xử lý.
 
-NRCs được định nghĩa trong tiêu chuẩn **ISO 14229** (UDS – Unified Diagnostic Services) và được dùng trong hệ thống **OBD** (On-Board Diagnostics) của xe để xác định phản hồi chẩn đoán mang tính phủ định đối với một yêu cầu chẩn đoán.
+NRC được định nghĩa trong tiêu chuẩn **ISO 14229** (UDS – Unified Diagnostic Services) và được dùng trong hệ thống **OBD** (On-Board Diagnostics) của xe để xác định phản hồi chẩn đoán mang tính phủ định đối với một yêu cầu chẩn đoán.
 
 ---
 

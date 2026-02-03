@@ -1,6 +1,6 @@
 ---
 title: System Services Stack
-parent: Basic Software (BSW)
+parent: BSW
 nav_order: 1
 has_children: true
 ---

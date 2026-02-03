@@ -1,6 +1,6 @@
 ---
 title: Memory Stack
-parent: Basic Software (BSW)
+parent: BSW
 nav_order: 3
 has_children: true
 ---

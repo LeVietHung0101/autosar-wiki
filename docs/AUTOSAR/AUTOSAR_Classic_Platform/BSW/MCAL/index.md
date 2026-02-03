@@ -1,6 +1,6 @@
 ---
-title: Microcontroller Abstraction Layer (MCAL)
-parent: Basic Software (BSW)
+title: MCAL
+parent: BSW
 nav_order: 7
 ---
 

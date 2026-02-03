@@ -1,6 +1,6 @@
 ---
 title: Communication Stack
-parent: Basic Software (BSW)
+parent: BSW
 nav_order: 2
 ---
 
