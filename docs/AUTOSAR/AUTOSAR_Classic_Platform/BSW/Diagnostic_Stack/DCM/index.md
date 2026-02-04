@@ -20,7 +20,7 @@ has_children: true
 
 {: .note }
 **Diagnostic Communication Manager (Dcm)** là module BSW trong AUTOSAR Classic, cung cấp API chung cho các dịch vụ chẩn đoán.
-DCM được sử dụng bởi các công cụ chẩn đoán bên ngoài (external diagnostic tools) để đọc dữ liệu, chẩn đoán lỗi, hoặc cập nhật phần mềm mà không cần biết chi tiết về mạng lưới nội bộ xe.
+Dcm được sử dụng bởi các công cụ chẩn đoán bên ngoài (external diagnostic tools) để đọc dữ liệu, chẩn đoán lỗi, hoặc cập nhật phần mềm mà không cần biết chi tiết về mạng lưới nội bộ xe.
 
 DCM được sử dụng trong các quá trình sau:
 - **Phát triển (development)**: Giai đoạn phát triển phần mềm và hệ thống, nơi kỹ sư sử dụng công cụ để kiểm tra và debug ECU trong lab.
@@ -39,11 +39,11 @@ DCM được sử dụng trong các quá trình sau:
 
 ## Chức năng chính
 
-**Đảm bảo luồng dữ liệu chẩn đoán**: Dcm đảm bảo dữ liệu từ công cụ chẩn đoán "chảy" đúng cách qua hệ thống, bao gồm nhận yêu cầu, xử lý, và trả lời.
+**Đảm bảo luồng dữ liệu chẩn đoán**: Dcm đảm bảo dữ liệu từ công cụ chẩn đoán "chảy" đúng cách qua hệ thống, bao gồm nhận yêu cầu, xử lý, và phản hồi.
 
 **Quản lý trạng thái**:
-- **Diagnostic sessions**: Các phiên chẩn đoán (default session, programming session,...). Mỗi session cho phép các dịch vụ khác nhau, ví dụ programming session cho phép flash ECU.
-- **Security states**: Trạng thái bảo mật, để ngăn chặn truy cập trái phép, như yêu cầu khóa/mở khóa bằng seed-key.
+- **Diagnostic sessions**: gồm các sessio như default session, programming session,... . Mỗi session cho phép các dịch vụ khác nhau, ví dụ programming session cho phép flash ECU.
+- **Security states**: nhằm ngăn chặn truy cập trái phép, như yêu cầu khóa/mở khóa bằng seed-key.
 
 **Kiểm tra yêu cầu**:
 - Dịch vụ có được hỗ trợ hay không (ví dụ: xe có hỗ trợ đọc dữ liệu cảm biến không?).
@@ -59,10 +59,10 @@ DCM được sử dụng trong các quá trình sau:
 - Ngoài ra, Dcm hỗ trợ dịch vụ **OBD** từ $01 đến $0A (ví dụ: $01 đọc dữ liệu PID - Parameter ID như tốc độ xe, nhiệt độ động cơ). Với các dịch vụ này, chức năng OBD của Autosar có khả năng đáp ứng tất cả các quy định OBD dành cho xe hạng nhẹ trên toàn thế giới (California OBDII, EOBD, Japan OBD và tất cả các quy định khác).
 
 **OSI-level 5 (Session Layer)**:
+- Đây là layer quản lý communication session, như thời gian chờ phản hồi.
 - Dcm xử lý phần không phụ thuộc mạng (the network-independent sections) của:
   - ISO 15765-3 (UDS trên CAN).
   - ISO 15765-4 (yêu cầu khí thải, session layer).
-- Đây là layer quản lý communication session, như thời gian chờ phản hồi.
 - Không phụ thuộc mạng nghĩa là Dcm không quan tâm đến cách dữ liệu truyền (CAN hay LIN), mà chỉ xử lý logic session.
 
 ---
@@ -70,8 +70,8 @@ DCM được sử dụng trong các quá trình sau:
 ## Vị trí trong AUTOSAR:
 
 - Nằm ở Service Layer (Communication Services).
-- Không phụ thuộc mạng: Giao tiếp qua PduR (PDU Router) để nhận/gửi thông điệp.
-- Tương tác: Nhận thông điệp từ PduR, xử lý nội bộ, lấy dữ liệu từ BSW/SW-C qua RTE, gửi phản hồi qua PduR.
+- Không phụ thuộc mạng: Giao tiếp qua PduR để nhận/gửi message.
+- Tương tác: Nhận message từ PduR, xử lý nội bộ, lấy dữ liệu từ BSW/SW-C qua RTE, gửi phản hồi qua PduR.
 
 <figure>
   <img
@@ -105,8 +105,8 @@ Sau đây là các BSW module và SW-Cs mà Dcm cung cấp API cho và phụ thu
     </tr>
     <tr>
       <td>Communication Manager (ComM)</td>
-      <td>Dcm thông báo cho ComM trạng thái hoạt động (active/inactive) của diagnostic communication, đồng thời xử lý các communication mode do ComM yêu cầu (Full/Silent/No-Communication).<br>
-          Dcm cung cấp các chức năng để enable/disable diagnostic communication nếu được yêu cầu từ ComM.
+      <td>Dcm thông báo cho ComM trạng thái hoạt động (active/inactive) của diagnostic communication, đồng thời cung cấp các chức năng để enable/disable diagnostic communication nếu được yêu cầu từ ComM.<br>
+        Dcm xử lý các communication mode do ComM yêu cầu (Full-/Silent-/No-Communication).
       </td>
     </tr>
     <tr>
@@ -130,8 +130,8 @@ Sau đây là các BSW module và SW-Cs mà Dcm cung cấp API cho và phụ thu
       <td>Dcm sử dụng IoHwAb để truy cập phần cứng I/O (ví dụ: để kiểm soát các bộ truyền động (actuator) trong dịch vụ InputOutputControlByIdentifier 0x2F).</td>
     </tr>
     <tr>
-      <td>Function Inhibition Manager (FIM)</td>
-      <td>Dcm sử dụng FIM để kiểm soát việc cấm chức năng (function inhibition) khi có lỗi. Dcm thông báo FIM khi xóa DTC..</td>
+      <td>Function Inhibition Manager (FiM)</td>
+      <td>Dcm sử dụng FiM để kiểm soát việc cấm chức năng (function inhibition) khi có lỗi. Dcm thông báo FiM khi xóa DTC.</td>
     </tr>
     <tr>
       <td>Non-Volatile Memory Manager (NvM)</td>
@@ -139,7 +139,7 @@ Sau đây là các BSW module và SW-Cs mà Dcm cung cấp API cho và phụ thu
       </td>
     </tr>
     <tr>
-      <td>Development Error Tracer (DET)</td>
+      <td>Development Error Tracer (Det)</td>
       <td>Dcm sử dụng Det để trace lỗi phát triển trong runtime.</td>
     </tr>
     <tr>
@@ -153,11 +153,10 @@ Sau đây là các BSW module và SW-Cs mà Dcm cung cấp API cho và phụ thu
 
 ## Submodule
 
-Dcm chia thành 3 submodule để xử lý từng khía cạnh cụ thể của quy trình chẩn đoán:
 Dcm được thiết kế theo kiến trúc phân tầng để xử lý các lớp chức năng khác nhau trong giao thức chẩn đoán. Cấu trúc này tuân thủ OSI model (lớp 5-7: Session, Presentation, Application), với 3 submodule:
 - Diagnostic Session Layer (DSL): **quản lý** trạng thái luồng dữ liệu chẩn đoán.
 - Diagnostic Service Dispatcher (DSD): **phân phối** yêu cầu chẩn đoán.
-- Diagnostic Service Processing (DSP): **xử lý** dịch vụ cụ thể
+- Diagnostic Service Processing (DSP): **xử lý** dịch vụ cụ thể.
 
 <figure>
   <img

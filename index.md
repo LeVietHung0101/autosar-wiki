@@ -32,6 +32,39 @@ permalink: /
   </tbody>
 </table>
 
+
+
+
+
+> **Syntax:**
+> BufReq_ReturnType **Dcm_StartOfReception**(  
+> <span class="indent">PduIdType **id**,</span>  
+> <span class="indent">const PduInfoType* **info**,</span>  
+> <span class="indent">PduLengthType **TpSduLength**,</span>  
+> <span class="indent">PduLengthType* **bufferSizePtr**</span>  
+> )  
+>  
+> **Return value:** BufReq_ReturnType
+> <table class="hover-table">
+>   <tbody>
+>    <tr>
+>    <td>b</td>
+>    <td>b</td>
+>    </tr>
+>    <tr>
+>    <td>b</td>
+>    <td>b</td>
+>    </tr>
+>    <tr>
+>    <td>b</td>
+>    <td>b</td>
+>    </tr>
+>   </tbody>
+> </table>
+{: .note }
+{: .codeBlock }
+
+
  -->
 
 <!-- 

@@ -43,5 +43,7 @@ callouts:
   warning:
     title: Warning
     color: red
+  codeBlock:
+    color: green
 
 
