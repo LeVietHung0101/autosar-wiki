@@ -5,6 +5,7 @@ nav_order: 7
 ---
 
 # Support of periodic transmission
+*Hỗ trợ truyền định kỳ*
 
 <details markdown="block">
   <summary>Mục lục</summary>

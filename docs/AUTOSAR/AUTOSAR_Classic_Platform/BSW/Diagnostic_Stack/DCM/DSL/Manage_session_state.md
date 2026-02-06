@@ -70,7 +70,7 @@ Trong quá trình init **Dcm**, trạng thái session mặc định được đ�
 
 ## Cơ chế Reset
 
-<span class="text-orange">Dcm_ResetToDefaultSession()</span> cho phép **App** chủ động đưa session hiện tại về lại **Default Session**. Khi function này được gọi, nó sẽ kích hoạt việc chuyển đổi chế độ (mode switch) của <span class="text-blue">DcmDiagnosticSessionControl</span> thông qua việc gọi <span class="text-orange">SchM_Switch</span> tương ứng.
+<span class="text-orange">Dcm_ResetToDefaultSession()</span> cho phép **App** chủ động đưa session hiện tại về lại **Default Session**. Khi function này được gọi, nó sẽ kích hoạt việc chuyển đổi chế độ (mode switch) của ModeDeclarationGroupPrototype <span class="text-blue">DcmDiagnosticSessionControl</span> bằng cách gọi <span class="text-orange">SchM_Switch</span> tương ứng.
 
 Ví dụ thực tế: hệ thống tự động kết thúc một Extended Diagnostic Session khi xe vượt quá một giới hạn tốc độ nhất định.
 
@@ -108,6 +108,8 @@ Ví dụ thực tế: hệ thống tự động kết thúc một Extended Diagn
 <summary><span class="text-orange">SchM_Switch</span></summary>
 
 > <span class="text-orange">SchM_Switch_\<bsnp\>_DcmDiagnosticSessionControl( 
-> RTE_MODE_DcmDiagnosticSessionControl__**DCM_DEFAULT_SESSION**)</span> 
+> RTE_MODE_DcmDiagnosticSessionControl__**DCM_DEFAULT_SESSION**)</span>  
+>
+> Lưu ý: \<bsnp\> là **B**SW **S**cheduler **N**ame **P**refix.  
 {: .codeBlock }
 </details>

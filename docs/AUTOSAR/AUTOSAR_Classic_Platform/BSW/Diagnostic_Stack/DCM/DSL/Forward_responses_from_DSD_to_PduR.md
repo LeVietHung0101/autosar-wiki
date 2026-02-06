@@ -5,6 +5,7 @@ nav_order: 4
 ---
 
 # Forward responses from DSD to PduR
+*Chuyển tiếp các phản hồi từ DSD đến PduR.*
 
 <details markdown="block">
   <summary>Mục lục</summary>
@@ -65,7 +66,7 @@ Kết quả truyền dữ liệu định kỳ sẽ được thông báo qua <spa
 
 Nếu DcmDslProtocolTx có Multiplicity = 0, Dcm sẽ xử lý yêu cầu chẩn đoán nhận được nhưng không gửi bất kỳ response nào.
 
-> Trong cấu hình, DcmDslProtocolTx có Multiplicity là **0..1**, nghĩa là đối với mỗi DcmDslMainConnection, chỉ được phép tồn tại duy nhất một cấu hình kênh truyền phản hồi.
+> *Trong cấu hình, DcmDslProtocolTx có Multiplicity là **0..1**, nghĩa là đối với mỗi DcmDslMainConnection, chỉ được phép tồn tại tối đa một cấu hình kênh truyền phản hồi.*
 
 ---
 

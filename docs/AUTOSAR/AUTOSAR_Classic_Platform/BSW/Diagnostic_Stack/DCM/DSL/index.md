@@ -34,32 +34,33 @@ DSL chỉ xử lý logic chung, không quan tâm đến mạng cụ thể (CAN, 
 DSL (Diagnostic Service Layer) cung cấp các chức năng sau.
 
 
+
 **Xử lý yêu cầu (Request Handling)**
-- [Chuyển tiếp các yêu cầu chẩn đoán từ PduR đến DSD.](#chuyển-tiếp-các-yêu-cầu-chẩn-đoán-từ-pdur-đến-dsd)
-- [Concurrent TesterPresent ("keep alive logic").](#concurrent-testerpresent-keep-alive-logic)
+- [Chuyển tiếp các yêu cầu chẩn đoán từ PduR đến DSD.](Forward_requests_from_PduR_to_DSD/)
+- [Concurrent TesterPresent ("keep alive logic").](Concurrent_TesterPresent/)
 
 **Xử lý phản hồi (Response Handling)**
-- Chuyển tiếp các phản hồi từ DSD đến PduR.
-- Đảm bảo thời gian phản hồi tới tester.
-- Hỗ trợ truyền định kỳ (periodic transmission).
-- Hỗ trợ Response On Event (ROE).
-- Hỗ trợ phản hồi phân đoạn (segmented response).
-- Hỗ trợ phản hồi ResponsePending do App kích hoạt.
+- [Chuyển tiếp các phản hồi từ DSD đến PduR.](Forward_responses_from_DSD_to_PduR/)
+- [Đảm bảo thời gian phản hồi tới tester.](Guarantee_timing_to_tester_by_sending_busy_responses/)
+- [Hỗ trợ truyền định kỳ (periodic transmission).](Support_of_periodic_transmission/)
+- [Hỗ trợ Response On Event (ROE).](Support_of_ROE_transmission/)
+- [Hỗ trợ phản hồi phân đoạn (segmented response).](Support_of_segmented_response/)
+- [Hỗ trợ phản hồi ResponsePending do App kích hoạt.](Support_of_ResponsePending_response_triggered_by_App/)
 
 **Xử lý mức bảo mật (Security Level Handling)**
-- Quản lý security level.
+- [Quản lý security level.](Manage_security_level/)
 
 **Quản lý trạng thái session (Session State Handling)**
-- Quản lý session state.
-- Theo dõi các non-default session đang hoạt động.
-- Cho phép thay đổi các tham số timing.
+- [Quản lý session state.](Manage_session_state/)
+- [Theo dõi các non-default session đang hoạt động.](Keep_track_of_active_nondefault_sessions/)
+- [Cho phép thay đổi các tham số timing.](Allow_to_modify_timings/)
 
 **Xử lý giao thức chẩn đoán (Diagnostic Protocol Handling)**
-- Xử lý nhiều diagnostic protocols khác nhau.
-- Quản lý tài nguyên.
+- [Xử lý nhiều diagnostic protocols khác nhau.](Handling_of_different_diagnostic_protocols/)
+- [Quản lý tài nguyên.](Manage_resources/)
 
-**Xử lý chế độ truyền thông (Communication Mode Handling)**
-- Xử lý các yêu cầu về chế độ truyền thông (Full- / Silent- / No-Communication).
+[**Xử lý chế độ truyền thông (Communication Mode Handling)**](Communication_Mode_Handling/)
+- Xử lý các yêu cầu về chế độ truyền thông (Full-/Silent-/No-Communication).
 - Thông báo trạng thái diagnostic đang active/inactive
 - Cho phép enable/disbale mọi loại diagnostic transmissions.
 

@@ -5,6 +5,7 @@ nav_order: 6
 ---
 
 # Guarantee timing to tester by sending busy responses
+*Đảm bảo thời gian phản hồi tới tester.*
 
 <details markdown="block">
   <summary>Mục lục</summary>

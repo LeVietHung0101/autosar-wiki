@@ -5,6 +5,7 @@ nav_order: 18
 ---
 
 # Communication Mode Handling
+*Xử lý chế độ truyền thông.*
 
 <details markdown="block">
   <summary>Mục lục</summary>

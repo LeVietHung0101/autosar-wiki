@@ -96,6 +96,8 @@ Việc cấu hình các tham số nhận và truyền trong <span class="text-bl
   </tbody>
 </table>
 
+> *Trong cấu hình, DcmDslProtocolTx có Multiplicity là **0..1**, nghĩa là đối với mỗi DcmDslMainConnection, chỉ được phép tồn tại tối đa một cấu hình kênh truyền phản hồi.*
+
 <details markdown="block">
 <summary><span class="text-blue">DcmDslProtocol</span></summary>
 

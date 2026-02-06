@@ -5,6 +5,7 @@ nav_order: 10
 ---
 
 # Support of ResponsePending response triggered by the Application
+*Hỗ trợ phản hồi ResponsePending do App kích hoạt.*
 
 <details markdown="block">
   <summary>Mục lục</summary>

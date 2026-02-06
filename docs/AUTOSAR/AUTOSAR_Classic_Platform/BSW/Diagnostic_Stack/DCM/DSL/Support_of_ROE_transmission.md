@@ -5,6 +5,7 @@ nav_order: 8
 ---
 
 # Support of ROE transmission
+*Hỗ trợ Response On Event (ROE).*
 
 <details markdown="block">
   <summary>Mục lục</summary>

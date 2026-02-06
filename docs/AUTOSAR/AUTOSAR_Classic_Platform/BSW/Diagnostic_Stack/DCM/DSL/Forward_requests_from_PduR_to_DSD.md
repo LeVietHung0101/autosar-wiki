@@ -5,6 +5,7 @@ nav_order: 2
 ---
 
 # Forward requests from PduR to DSD
+*Chuyển tiếp các yêu cầu chẩn đoán từ PduR đến DSD*
 
 <details markdown="block">
   <summary>Mục lục</summary>
