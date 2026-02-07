@@ -68,13 +68,9 @@ Khi thực hiện fallback, **Dcm** sẽ **xóa tất cả thông tin xác thự
 ---
 
 ## 5. API ghi đè vai trò (Dcm_SetDeauthenticatedRole)
-**Dcm** cung cấp API `Dcm_SetDeauthenticatedRole()` để **App** có thể chủ động thiết lập vai trò (**role**). Trong một số trường hợp, việc này sẽ hiệu quả hơn việc thực hiện các diagnostic services với quá trình phân tích chứng chỉ (certificate parsing) có thể tốn nhiều thời gian.
+**Dcm** cung cấp API <span class="text-orange">`Dcm_SetDeauthenticatedRole()`</span> để **App** có thể chủ động thiết lập vai trò (**role**). Trong một số trường hợp, việc này sẽ hiệu quả hơn việc thực hiện các diagnostic services với quá trình phân tích chứng chỉ (certificate parsing) có thể tốn nhiều thời gian.
 
 Một số lưu ý:
-- **Chỉ thiết lập deauthenticated role bởi SWC khi ở deauthenticated**: **Dcm** chỉ xử lý lệnh gọi `Dcm_SetDeauthenticatedRole()` nếu kết nối đang ở trạng thái **deauthenticated**.
-- **Thời gian tồn tại (Lifetime) của deauthenticated role bởi SWC**: Một deauthenticated role được thiết lập bởi `Dcm_SetDeauthenticatedRole()` sẽ bi loại bỏ khi kết nối đó chuyển sang **authenticated**.
+- **Chỉ thiết lập deauthenticated role bởi SWC khi ở deauthenticated**: **Dcm** chỉ xử lý lệnh gọi <span class="text-orange">`Dcm_SetDeauthenticatedRole()`</span> nếu kết nối đang ở trạng thái **deauthenticated**.
+- **Thời gian tồn tại (Lifetime) của deauthenticated role bởi SWC**: Một deauthenticated role được thiết lập bởi <span class="text-orange">`Dcm_SetDeauthenticatedRole()`</span> sẽ bi loại bỏ khi kết nối đó chuyển sang **authenticated**.
 - **Không có sự duy trì deauthenticated roles bởi SWC**: Khi ECU power-on, ECU luôn sử dụng **deauthenticated** được cấu hình trong `DcmDspAuthenticationDeauthenticatedRole`.
-
-
-<!-- - API này chỉ có hiệu lực khi kết nối đang ở trạng thái **deauthenticated**.
-- Vai trò được thiết lập qua API này sẽ bị hủy bỏ ngay khi kết nối chuyển sang trạng thái **authenticated** và không được lưu trữ qua các chu kỳ khởi động. -->
