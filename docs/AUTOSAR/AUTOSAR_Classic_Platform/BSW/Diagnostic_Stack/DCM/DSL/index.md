@@ -15,23 +15,48 @@ nav_order: 2
 
 ---
 
-## Giới thiệu
+## 1. Giới thiệu
 
-DSL cung cấp các chức năng:
-- Session handling (ISO14229-1, ISO 15765-3)
-- Application layer timing handling (ISO14229-1, ISO 15765-3)
-- Specific response behavior (ISO14229-1, ISO 15765-3).
-- Quản lý trạng thái xác thực cho mỗi kết nối chẩn đoán (ISO 14229-1:2018)
-    - Cung cấp trạng thái xác thực cho mỗi kết nối
-    - Quản lý chuyển đổi trạng thái xác thực
+{: .note }
+**Diagnostic Session Layer (DSL)** là một submodule thuộc module Diagnostic Communication Manager (Dcm). DSL hoạt động ở Session Layer và tuân thủ ISO 14229-1, ISO 15765-3.
+
+**DSL** đóng vai trò trung tâm trong việc:
+- Đảm bảo luồng dữ liệu liên quan đến các diagnostic requests/responses.
+- Giám sát và đảm bảo các tham số thời gian (P2, P2*, S3) của giao thức chẩn đoán.
+- Quản lý các trạng thái chẩn đoán, đặc biệt là các diagnostic sessions và các security level.
 
 DSL chỉ xử lý logic chung, không quan tâm đến mạng cụ thể (CAN, LIN, FlexRay, Ethernet). Các phần phụ thuộc mạng (như timing CAN) được xử lý ở lớp dưới (transport layer, qua PduR).
 
 ---
 
-## Chức năng
+## 2. Tương tác của DSL với các module và submodule khác
 
-DSL (Diagnostic Service Layer) cung cấp các chức năng sau.
+**Module PduR (PDU Router):**<br>
+PduR cung cấp dữ liệu của các yêu cầu chẩn đoán đến; ngược lại, DSL kích hoạt việc gửi các thông điệp phản hồi ra mạng thông qua PduR.
+
+**Module ComM (Communication Manager)**:<br>
+DSL đảm bảo các hành vi giao tiếp theo yêu cầu từ ComM (như các chế độ Full-/Silent-/No-Communication).
+
+**Submodule DSD (Diagnostic Service Dispatcher)**:<br>
+DSL thông báo cho DSD về các yêu cầu mới nhận được và cung cấp dữ liệu tương ứng. DSD sau đó sẽ kích hoạt DSL khi có phản hồi chẩn đoán sẵn sàng để gửi đi.
+
+**Submodule DSP (Diagnostic Service Processing) và SW-Cs**:<br>
+DSL cung cấp khả năng truy cập vào session và security level hiện tại cho DSP và SW-Cs.
+
+
+<figure>
+  <img
+    src="{{ site.baseurl }}\assets\images\DCM\DSL\DSL_interacte_with_others_module.png"
+    alt="DSL interacte with modules and others submodule"
+  />
+  <figcaption>DSL interacte with modules and others submodule</figcaption>
+</figure>
+
+---
+
+## 3. Chức năng
+
+DSL cung cấp các chức năng sau.
 
 
 

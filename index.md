@@ -13,7 +13,7 @@ permalink: /
 
 &#x2BA9;  ⮩
 
-
+[...]({{ "/docs/..." | relative_url }})
 
 <table class="hover-table">
   <thead>

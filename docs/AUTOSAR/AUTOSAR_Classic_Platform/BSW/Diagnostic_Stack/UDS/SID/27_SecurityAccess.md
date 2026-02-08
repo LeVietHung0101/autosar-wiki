@@ -1,7 +1,6 @@
 ---
 title: SecurityAccess (0x27) service
 parent: SID
-permalink: /SecurityAccess_service/
 nav_order: 3
 ---
 
