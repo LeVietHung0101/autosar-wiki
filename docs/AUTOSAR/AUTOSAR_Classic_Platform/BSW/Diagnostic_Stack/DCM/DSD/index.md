@@ -78,8 +78,8 @@ Trước khi cho phép thực thi một dịch vụ, DSD thực hiện một lo�
 3. Trạng thái xác thực (Authentication)
 4. Phiên chẩn đoán
 5. Mức bảo mật
-6. Quyền từ ứng dụng Nhà cung cấp\
-7. Các quy tắc chế độ (Mode rules).
+6. Quyền từ ứng dụng Nhà cung cấp
+7. Các quy tắc chế độ (Mode rules)
 
 **Kiểm tra subfunction và định dạng của request message:**<br>
 DSD xác thực xem subfunction được yêu cầu có nằm trong cấu hình hay không, nếu không sẽ trả về NRC  (Sub-Function Not Supported); và kiểm tra xem độ dài request message có thoả yêu cầu không, nếu không sẽ trả về NRC 0x13 (Incorrect Message Length or Invalid Format).

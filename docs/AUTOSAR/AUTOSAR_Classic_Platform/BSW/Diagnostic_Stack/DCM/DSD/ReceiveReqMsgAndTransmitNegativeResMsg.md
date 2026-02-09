@@ -5,7 +5,7 @@ nav_order: 5
 ---
 
 # Receive a request message and transmit a negative response message
-*Nhận một thông điệp yêu cầu và truyền một thông điệp phản hồi tiêu cực*
+*Nhận một thông điệp yêu cầu và truyền một thông điệp negative response*
 
 <details markdown="block">
   <summary>Mục lục</summary>
@@ -16,42 +16,57 @@ nav_order: 5
 
 ---
 
-DSD sẽ từ chối và gửi phản hồi tiêu cực nếu request
-Không hợp lệ (sai định dạng).
-Không được thực hiện trong session hiện tại.
+## 1. Cơ chế
 
-Ngay cả yêu cầu định dạng đúng cũng có thể bị từ chối do trạng thái ECU/hệ thống (ví dụ: xe đang chạy, pin yếu). DSP sẽ kích hoạt phản hồi tiêu cực với NRC chi tiết.
-Ví dụ:
-Yêu cầu xóa DTC (0x14) nhưng không có DTC nào, DSP gửi NRC 0x31 (Request Out Of Range).
-Trạng thái ECU/hệ thống đang bận (busy), DSP NRC 0x21 (Busy Repeat Request).
+Một yêu cầu chẩn đoán có thể bị từ chối và phải gửi negative response vì nhiều lý do khác nhau:
 
-Với yêu cầu đa tham số (ví dụ: 0x22 với nhiều DID - Data Identifier), mỗi tham số xử lý riêng, và có thể lỗi riêng. Phản hồi tích cực nếu ít nhất một tham số thành công.
+- **DSD từ chối:** Nếu yêu cầu không hợp lệ hoặc không được phép thực thi trong session hiện tại, DSD sẽ từ chối xử lý và gửi negative response.
 
-[SWS_Dcm_00827]
-DSD phải kiểm tra yêu cầu theo thứ tự ISO 14229-1 (7.5.2, 7.5.3). Nếu thất bại, dừng chuỗi kiểm tra NRC sau đó, dừng thực hiện yêu cầu, và gửi NRC tương ứng.
+- **DSP từ chối:** Ngay cả khi thông điệp yêu cầu đúng định dạng, nó vẫn có thể bị từ chối nếu trạng thái của ECU hoặc hệ thống không cho phép thực thi. Khi đó, DSP sẽ kích hoạt negative response kèm theo NRC tương ứng để giải thích lý do.
 
-Thứ tự kiểm tra NRC của DSD đối với request không có subfunction:
-0x21 – Busy Repeat Request
-0xXX – Manufacturer specific failure detected.
-0x11 – Service Not Supported
-0x7F – Service Not Supported in Active Session
-0x33 – Security Access Denied (nếu áp dụng)
-0xXX – Supplier specific failure detected.
-→ Chuyển sang specific SID checks nếu SID = 0x31.
+- **Xử lý đa tham số:** Đối với các yêu cầu có nhiều tham số (ví dụ: dịch vụ 0x22 đọc nhiều DID cùng lúc), mỗi tham số được xử lý riêng biệt. Nếu có ít nhất một tham số được xử lý thành công, ECU sẽ gửi positive response.
 
-Thứ tự kiểm tra NRC của DSD đối với request có subfunction:
-0x13 – Incorrect Message Length / Invalid Format
-0x12 – Sub-function Not Supported
-0x7E – Sub-function Not Supported in Active Session
-0x33 – Security Access Denied (for subfunction)
-0x24 – Request Sequence Error (for subfunction)
-0xXX – Manufacturer / Supplier specific failure detected.
-→ Chuyển sang specific SID checks.
+- **Thứ tự kiểm tra:** DSD thực hiện kiểm tra yêu cầu theo thứ tự quy định bởi **ISO 14229-1**. Nếu bất kỳ bước kiểm tra nào thất bại, DSD sẽ dừng chuỗi kiểm tra, ngừng thực thi dịch vụ và truyền NRC tương ứng.
 
-Manufacturer (OEM)
-Hãng sản xuất xe hoàn chỉnh (Vehicle Manufacturer).
-Chủ sở hữu kiến trúc ECU tổng thể.
-Toyota, Hyundai, Volkswagen, BMW, Ford
-Supplier là:
-Công ty cung cấp ECU, phần mềm nền (BSW), hoặc module chức năng.
-Thực thi yêu cầu của manufacturer.
+---
+
+## Thứ tự kiểm tra NRC của DSD đối với request không có subfunction
+
+1. 0x21 – Busy Repeat Request
+1. 0xXX – Manufacturer specific failure detected.
+1. 0x11 – Service Not Supported
+1. 0x7F – Service Not Supported in Active Session
+1. 0x33 – Security Access Denied (nếu áp dụng)
+1. 0xXX – Supplier specific failure detected.
+1. Chuyển sang specific SID checks nếu SID = 0x31.
+
+
+
+<figure>
+  <img
+    src="{{ site.baseurl }}\assets\images\DCM\DSD\GeneralServerResponseBehaviour.png"
+    alt="suppressPosRspMsgIndicationBit (SPRMIB)"
+  />
+  <figcaption>Hành vi phản hồi chung của server</figcaption>
+</figure>
+
+---
+
+## Thứ tự kiểm tra NRC của DSD đối với request có subfunction:
+
+1. 0x13 – Incorrect Message Length / Invalid Format
+1. 0x12 – Sub-function Not Supported
+1. 0x7E – Sub-function Not Supported in Active Session
+1. 0x33 – Security Access Denied (for subfunction)
+1. 0x24 – Request Sequence Error (for subfunction)
+1. 0xXX – Manufacturer / Supplier specific failure detected.
+1. Chuyển sang specific SID checks.
+
+
+<figure>
+  <img
+    src="{{ site.baseurl }}\assets\images\DCM\DSD\GeneralServerResponseBehaviourForReqtMsgWithSubFuncPara.png"
+    alt="suppressPosRspMsgIndicationBit (SPRMIB)"
+  />
+  <figcaption>Hành vi phản hồi chung của máy chủ đối với các thông báo yêu cầu có tham số Sub-function</figcaption>
+</figure>

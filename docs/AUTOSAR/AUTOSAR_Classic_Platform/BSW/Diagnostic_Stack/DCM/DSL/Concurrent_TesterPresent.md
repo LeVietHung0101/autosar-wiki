@@ -45,6 +45,7 @@ Một số lưu ý của <span class="text-orange">Dcm_CopyTxData()</span>:
 - Nếu function return **BUFREQ_E_NOT_OK**, yêu cầu truyền dữ liệu vẫn chưa kết thúc. Cần phải có một xác nhận cuối cùng (PduR thông báo lỗi qua <span class="text-orange">Dcm_TpTxConfirmation()</span>) để hoàn thành dịch vụ hiện tại trước khi có thể bắt đầu một quá trình truyền mới.
 - Function này phải được gọi trong ngữ cảnh ngắt (interrupt context).
 
+
 <details markdown="block">
 <summary><span class="text-orange">PduR_DcmTransmit()</span></summary>
 
