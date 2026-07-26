@@ -5,7 +5,7 @@ nav_order: 1
 has_children: true
 ---
 
-# Service Identifier (SID)
+<h1>Service Identifier (SID)</h1>
 
 <details markdown="block">
   <summary>Mục lục</summary>
@@ -16,18 +16,27 @@ has_children: true
 
 ---
 
+# Định nghĩa
+
 {: .note }
-**Service Identifier (SID)** được dùng để xác định các dịch vụ chẩn đoán cụ thể trong giao thức UDS (ISO 14229).
+**Service Identifier (SID)** được dùng để xác định các dịch vụ chẩn đoán cụ thể trong giao thức UDS (ISO 14229). Các SID được truyền từ Application Layer xuống các tầng thấp hơn (Lower Layers), và từ các tầng thấp hơn trả ngược lên Application Layer.
 
-SID được chia thành 2 loại: request SID và response SID; với **response SID = request SID + 0x40**.
+SID được chia thành 2 loại: request SID và positive response SID.
+```c
+positive response SID = request SID + 0x40
+```
 
-ECU nhận yêu cầu chẩn đoán (chứa request SID) này và trả về phản hồi thích hợp (chứa response SID) cho dịch vụ tương ứng.
+ECU nhận yêu cầu chẩn đoán (chứa request SID) này và trả về phản hồi thích hợp (chứa positive response SID) cho dịch vụ tương ứng (nếu dịch vụ đó được xử lý thành công).
 
 ---
 
-## Danh sách SIDs (theo loại dịch vụ)
+# Danh sách SIDs (theo loại dịch vụ)
 
-Các dịch vụ UDS trên thực tế là một tập hợp con của một tập hợp lớn hơn các dịch vụ chẩn đoán - xem tổng quan bên dưới.
+Các dịch vụ UDS trên thực tế là một tập hợp con của một tập hợp lớn hơn các dịch vụ chẩn đoán, gồm:
+- Hệ thống chẩn đoán tiêu chuẩn **OBD** được định nghĩa trong **ISO 15031-5 / SAE J1979**.
+- Giao thức chẩn đoán **UDS** được định nghĩa trong **ISO 14229-1**.
+
+Bảng sau trình bày các SIDs trong phạm vi 0x00 – 0xFF.
 
 <table class="hover-table">
   <thead>
@@ -40,138 +49,114 @@ Các dịch vụ UDS trên thực tế là một tập hợp con của một t�
   </thead>
   <tbody>
     <tr>
-      <td>0x00 – 0x0F</td>
-      <td>OBD service requests</td>
-      <td>ISO 15031-5</td>
-      <td>Chẩn đoán khí thải và giám sát pháp lý;<br>Không phải UDS, nhưng cùng chia sẻ không gian SID</td>
+      <td>0x00</td>
+      <td>N/A</td>
+      <td>Reserved</td>
+      <td>Reserved</td>
+    </tr>
+    <tr>
+      <td>0x01 – 0x0F</td>
+      <td>Specified services</td>
+      <td>ISO 15031-5 / SAE J1979</td>
+      <td>Chẩn đoán khí thải và giám sát pháp lý (OBD);<br>Không phải UDS, nhưng cùng chia sẻ không gian SIDs</td>
     </tr>
     <tr>
       <td>0x10 – 0x3E</td>
-      <td>ISO 14229 (requests)</td>
-      <td>ISO 14229</td>
+      <td>Service requests</td>
+      <td>ISO 14229-1</td>
       <td>Chẩn đoán, lập trình, bảo trì ECU</td>
     </tr>
     <tr>
       <td>0x3F</td>
-      <td>Not applicable</td>
+      <td>N/A</td>
       <td>Reserved</td>
-      <td>Dành cho tương lai</td>
+      <td>Reserved</td>
     </tr>
     <tr>
-      <td>0x40 – 0x4F</td>
-      <td>OBD service responses</td>
-      <td>ISO 15031-5</td>
-      <td>Phản hồi thành công cho OBD request (0x00 – 0x0F)</td>
+      <td>0x40</td>
+      <td>N/A</td>
+      <td>Reserved</td>
+      <td>Reserved</td>
+    </tr>
+    <tr>
+      <td>0x41 – 0x4F</td>
+      <td>Positive service responses</td>
+      <td>ISO 15031-5 / SAE J1979</td>
+      <td>Phản hồi thành công cho OBD request<br>(0x01 – 0x0F)</td>
     </tr>
     <tr>
       <td>0x50 – 0x7E</td>
-      <td>ISO 14229 (responses)</td>
-      <td>ISO 14229</td>
-      <td>Phản hồi thành công cho UDS request (0x10 – 0x3E)</td>
+      <td>Positive service responses</td>
+      <td>ISO 14229-1</td>
+      <td>Phản hồi thành công cho UDS request<br>(0x10 – 0x3E)</td>
     </tr>
     <tr>
       <td>0x7F</td>
-      <td>Negative response SID</td>
-      <td>ISO 14229</td>
+      <td>Negative response service identifier</td>
+      <td>ISO 14229-1</td>
       <td>Báo lỗi khi xử lý request</td>
     </tr>
     <tr>
-      <td>0x80</td>
-      <td>Not applicable</td>
-      <td>ISO 14229 (reserved)</td>
-      <td>Dành cho tương lai</td>
-    </tr>
-    <tr>
-      <td>0x81 – 0x82</td>
-      <td>Not applicable</td>
-      <td>ISO 14229 (reserved)</td>
-      <td>Dành cho tương lai</td>
+      <td>0x80 – 0x82</td>
+      <td>N/A</td>
+      <td>Reserved</td>
+      <td>Reserved</td>
     </tr>
     <tr>
       <td>0x83 – 0x88</td>
-      <td>ISO 14229 (requests)</td>
-      <td>ISO 14229</td>
+      <td>Service requests</td>
+      <td>ISO 14229-1</td>
       <td>Chẩn đoán, lập trình, bảo trì ECU;<br>Ít dùng trong thực tế; dùng để mở rộng và tương thích trong tương lai</td>
     </tr>
     <tr>
-      <td>0x89 – 0x9F</td>
-      <td>Service requests</td>
+      <td>0x89 – 0xB9</td>
+      <td>N/A</td>
       <td>Reserved</td>
-      <td>Dành cho tương lai</td>
-    </tr>
-    <tr>
-      <td>0xA0 – 0xB9</td>
-      <td>Service requests</td>
-      <td>Defined by vehicle OEM</td>
-      <td>Chức năng riêng của vehicle OEM; Không nằm trong ISO</td>
+      <td>Reserved</td>
     </tr>
     <tr>
       <td>0xBA – 0xBE</td>
       <td>Service requests</td>
-      <td>Defined by systems OEM</td>
-      <td>Chức năng riêng của systems OEM; Không nằm trong ISO</td>
+      <td>Định nghĩa bởi nhà cung cấp (system supplier)</td>
+      <td>Chức năng riêng của nhà cung cấp;<br>Không nằm trong ISO</td>
     </tr>
     <tr>
-      <td>0xBF</td>
-      <td>Not applicable</td>
+      <td>0xBF – 0xC2</td>
+      <td>N/A</td>
       <td>Reserved</td>
-      <td>Dành cho tương lai</td>
-    </tr>
-    <tr>
-      <td>0xC0</td>
-      <td>Not applicable</td>
-      <td>ISO 14229 (reserved)</td>
-      <td>Dành cho tương lai</td>
-    </tr>
-    <tr>
-      <td>0xC1 – 0xC2</td>
-      <td>Not applicable</td>
-      <td>ISO 14229 (reserved)</td>
-      <td>Dành cho tương lai</td>
+      <td>Reserved</td>
     </tr>
     <tr>
       <td>0xC3 – 0xC8</td>
-      <td>ISO 14229 (responses)</td>
-      <td>ISO 14229</td>
-      <td>Phản hồi cho UDS request (0x83 – 0x88)</td>
+      <td>Positive service responses</td>
+      <td>ISO 14229-1</td>
+      <td>Phản hồi cho UDS request<br>(0x83 – 0x88)</td>
     </tr>
     <tr>
-      <td>0xC9 – 0xDF</td>
-      <td>Service responses</td>
+      <td>0xC9 – 0xF9</td>
+      <td>N/A</td>
       <td>Reserved</td>
-      <td>Dành cho tương lai</td>
-    </tr>
-    <tr>
-      <td>0xE0 – 0xF9</td>
-      <td>Service responses</td>
-      <td>Defined by vehicle OEM</td>
-      <td>Phản hồi tương ứng cho vehicle OEM-defined requests<br>(0xA0 – 0xB9)</td>
+      <td>Reserved</td>
     </tr>
     <tr>
       <td>0xFA – 0xFE</td>
-      <td>Service responses</td>
-      <td>Defined by systems OEM</td>
-      <td>Phản hồi tương ứng cho systems OEM-defined requests<br>(0xBA – 0xBE)</td>
+      <td>Positive service responses</td>
+      <td>Định nghĩa bởi nhà cung cấp (system supplier)</td>
+      <td>Phản hồi tương ứng cho chức năng riêng của nhà cung cấp<br>(0xBA – 0xBE)</td>
     </tr>
     <tr>
       <td>0xFF</td>
-      <td>Not applicable</td>
+      <td>N/A</td>
       <td>Reserved</td>
-      <td>Dành cho tương lai</td>
+      <td>Reserved</td>
     </tr>
   </tbody>
 </table>
 
 Ghi chú:
-
-- ECU phải trả **NRC 0x11 (ServiceNotSupported)** nếu nhận các SID **Not applicable/Reserved**.
-- Positive Response SID = Request SID + 0x40
-- **Vehicle OEM**: Hãng sản xuất xe hoàn chỉnh (Toyota, Hyundai, BMW, Ford).
-- **System OEM**: Hãng cung cấp hệ thống / ECU cho xe (Bosch, Continental, Denso, ZF).
-
-**Lý do tách 0x80 và 0x81–0x82 thành 2 nhóm riêng?**
-
-**Lý do tách 0xC0 và 0xC1–0xC2 thành 2 nhóm riêng?**
+- **N/A**: Not applicable (không áp dụng).
+- ECU phải trả **NRC 0x11 (ServiceNotSupported)** nếu nhận các SID **not applicable / reserved**.
+- **System supplier**: Đơn vị phát triển E/E System hoặc ECU cho OEM (Toyota, BMW, VW, Ford,...). Đây thường là các Tier-1 suppliers như Bosch, Continental, Denso, ZF, Aptiv, Valeo, Marelli,...
 
 ---
 

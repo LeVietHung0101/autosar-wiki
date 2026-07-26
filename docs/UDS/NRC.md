@@ -4,7 +4,7 @@ parent: UDS
 nav_order: 2
 ---
 
-# Negative Response Code (NRC)
+<h1>Negative Response Code (NRC)</h1>
 
 <details markdown="block">
   <summary>Mục lục</summary>
@@ -15,13 +15,15 @@ nav_order: 2
 
 ---
 
+# Định nghĩa
+
 **Negative Response Code (NRC)**: là mã lỗi (HEX) được sử dụng trong giao thức truyền thông chẩn đoán của xe, do **ECU phản hồi cho tester tool** khi một yêu cầu chẩn đoán cụ thể thất bại hoặc không thể xử lý.
 
 NRC được định nghĩa trong tiêu chuẩn **ISO 14229** (UDS – Unified Diagnostic Services) và được dùng trong hệ thống **OBD** (On-Board Diagnostics) của xe để xác định phản hồi chẩn đoán mang tính phủ định đối với một yêu cầu chẩn đoán.
 
 ---
 
-## Danh sách NRCs
+# Danh sách NRCs
 
 <table class="hover-table">
   <thead>
@@ -44,6 +46,7 @@ NRC được định nghĩa trong tiêu chuẩn **ISO 14229** (UDS – Unified D
     <tr><td>0x26</td><td>FPEORA</td><td>Failure Prevents Execution Of Requested Action</td></tr>
     <tr><td>0x31</td><td>ROOR</td><td>Request Out of Range</td></tr>
     <tr><td>0x33</td><td>SAD</td><td>Security Access Denied</td></tr>
+    <tr><td>0x34</td><td>-</td><td>Authentication Required</td></tr>
     <tr><td>0x35</td><td>IK</td><td>Invalid Key</td></tr>
     <tr><td>0x36</td><td>ENOA</td><td>Exceed Number Of Attempts</td></tr>
     <tr><td>0x37</td><td>RTDNE</td><td>Required Time Delay Not Expired</td></tr>
@@ -79,7 +82,7 @@ NRC được định nghĩa trong tiêu chuẩn **ISO 14229** (UDS – Unified D
 
 ---
 
-## Danh sách NRCs (kèm mô tả)
+# Danh sách NRCs (kèm mô tả)
 
 <table class="hover-table">
   <thead>
@@ -172,8 +175,8 @@ NRC được định nghĩa trong tiêu chuẩn **ISO 14229** (UDS – Unified D
     </tr>
     <tr>
       <td>0x34</td>
-      <td>ISOSAEReserved</td>
-      <td>This range of values is reserved for future definition.</td>
+      <td>AuthenticationRequired</td>
+      <td>NRC indicates that the requested service will not be taken because the client has insufficient rights based on its Authentication state.</td>
     </tr>
     <tr>
       <td>0x35</td>
@@ -191,7 +194,17 @@ NRC được định nghĩa trong tiêu chuẩn **ISO 14229** (UDS – Unified D
       <td>This response code indicates that the requested action will not be taken because the client’s latest attempt to gain security access was initiated before the server’s required timeout period had elapsed.</td>
     </tr>
     <tr>
-      <td>0x38 - 0x4F</td>
+      <td>0x38</td>
+      <td>SecureDataTransmissionRequired</td>
+      <td>NRC indicates that the requested service will not be taken because the requested action is required to be sent using a secured communication channel.</td>
+    </tr>
+    <tr>
+      <td>0x39</td>
+      <td>SecureDataTransmissionNotAllowed</td>
+      <td>NRC indicates that this message was received using the SecuredDataTransmission (SID 0x84) service. However, the requested action is not allowed to be sent using the SecuredDataTransmission (0x84) service.</td>
+    </tr>
+    <tr>
+      <td>0x3A - 0x4F</td>
       <td>reservedByExtendedDataLinkSecurityDocument</td>
       <td>This range of values is reserved by ISO 15764 Extended data link security.</td>
     </tr>
@@ -361,3 +374,8 @@ NRC được định nghĩa trong tiêu chuẩn **ISO 14229** (UDS – Unified D
 
 
 ---
+
+# Tham khảo
+
+[1] [uds.message.nrc — py-uds 4.0.0 documentation"](https://uds.readthedocs.io/en/latest/autoapi/uds/message/nrc/index.html#uds.message.nrc.NRC.RequestOutOfRange)
+
