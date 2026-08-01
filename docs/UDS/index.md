@@ -148,6 +148,7 @@ Vì lý do bảo mật, các dịch vụ UDS quan trọng sẽ bị hạn chế 
 
 Trong thực tế, quy trình xác thực này cho phép các OEM đảm bảo ngăn chặn truy cập trái phép từ hacker hoặc công cụ không chính hãng.
 
+
 ---
 <!-- 
 # Các khái niệm trong bài viết
@@ -171,5 +172,169 @@ Trong thực tế, quy trình xác thực này cho phép các OEM đảm bảo n
 https://avtoad.com.ua/en/base/uds-protocol-unified-diagnostic-services 
 [UDS Explained - A Simple Intro (Unified Diagnostic Services)](https://www.csselectronics.com/pages/uds-protocol-tutorial-unified-diagnostic-services)
 -->
+
+
+
+
+<!-- 
+<table class="hover-table">
+  <thead>
+    <tr>
+      <th>Khái niệm</th>
+      <th>Định nghĩa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>client</td>
+      <td>
+        Chức năng thuộc <b>tester</b>, sử dụng các <b>diagnostic service</b>.
+        <br>Một tester còn sử dụng các chức năng khác như quản lý cơ sở dữ liệu, diễn giải dữ liệu chuyên biệt và giao diện người-máy (human-machine interface - HMI).
+      </td>
+    </tr>
+    <tr>
+      <td>tester</td>
+      <td>
+        Hệ thống điều khiển các chức năng như kiểm thử (<b>testing</b>), kiểm tra (<b>inspection</b>), giám sát (<b>monitoring</b>) hoặc chẩn đoán (<b>diagnosis</b>) đối với <b>ECU</b> trên xe.
+        <br>Tester có thể được thiết kế cho từng loại người sử dụng, ví dụ:
+        <ul>
+          <li><b>Off-board scan tool</b> dành cho kỹ thuật viên sửa chữa.</li>
+          <li><b>Off-board test tool</b> dành cho nhà máy lắp ráp.</li>
+          <li><b>On-board tester</b> tích hợp trên xe.</li>
+        </ul>
+        Tester cũng được gọi là <b>client</b>.
+      </td>
+    </tr>
+    <tr>
+      <td>server</td>
+      <td>
+        Chức năng nằm trong một <b>ECU</b>, cung cấp các <b>diagnostic service</b>.
+        <br><b>ISO 14229</b> phân biệt giữa <b>server</b> (chức năng) và <b>ECU</b> (thiết bị) nhằm đảm bảo tính độc lập với cách triển khai.
+      </td>
+    </tr>
+    <tr>
+      <td>electronic control unit (ECU)</td>
+      <td>
+        Bộ điều khiển điện tử cung cấp thông tin liên quan đến các cảm biến và mạng điều khiển được kết nối.
+        <br>Các hệ thống như <b>ABS (Anti-lock Braking System)</b> và <b>Engine Management System</b> được xem là ECU.
+      </td>
+    </tr>
+    <tr>
+      <td>diagnostic service</td>
+      <td>
+        Quá trình trao đổi thông tin do <b>client</b> khởi tạo nhằm yêu cầu thông tin chẩn đoán từ <b>server</b> và/hoặc thay đổi hành vi của server phục vụ mục đích chẩn đoán.
+      </td>
+    </tr>
+    <tr>
+      <td>diagnostic session</td>
+      <td>
+        Trạng thái của <b>server</b> trong đó một tập hợp xác định các <b>diagnostic service</b> và chức năng được kích hoạt.
+      </td>
+    </tr>
+    <tr>
+      <td>diagnostic trouble code (DTC)</td>
+      <td>
+        Mã số chuẩn dùng để định danh một tình trạng lỗi được hệ thống chẩn đoán trên xe (<b>On-board Diagnostic System - OBD</b>) phát hiện.
+      </td>
+    </tr>
+    <tr>
+      <td>security</td>
+      <td>
+        Cơ chế bảo vệ các module trên xe khỏi sự truy cập trái phép (<b>unauthorized intrusion</b>) thông qua liên kết truyền dữ liệu chẩn đoán (<b>vehicle diagnostic data link</b>).
+      </td>
+    </tr>
+    <tr>
+      <td>boot memory partition</td>
+      <td>
+        Vùng bộ nhớ của <b>server</b> chứa <b>boot software</b>.
+      </td>
+    </tr>
+    <tr>
+      <td>boot software</td>
+      <td>
+        Phần mềm được thực thi trong một vùng bộ nhớ đặc biệt của <b>server</b>, chủ yếu dùng để khởi động <b>ECU</b> và thực hiện quá trình lập trình (<b>programming</b>) cho server.
+        <br>Vùng bộ nhớ này không bị xóa trong quá trình <b>programming</b> thông thường và sẽ được thực thi khi <b>server application</b> bị thiếu hoặc được xác định là không hợp lệ, nhằm luôn đảm bảo khả năng <b>reprogramming</b> cho server.
+      </td>
+    </tr>
+    <tr>
+      <td>diagnostic channel</td>
+      <td>
+        Đường truyền chuyên dụng từ <b>client</b> đến <b>server</b> dành cho giao tiếp chẩn đoán.
+        <br>Nhiều client có thể đồng thời kết nối đến cùng một server và được phân biệt bằng <b>tester source address</b> riêng.
+      </td>
+    </tr>
+    <tr>
+      <td>diagnostic data</td>
+      <td>
+        Dữ liệu nằm trong bộ nhớ của <b>ECU</b>, có thể được <b>tester</b> đọc và/hoặc sửa đổi.
+        <br>Diagnostic data bao gồm các tín hiệu đầu vào/đầu ra analog/digital, các giá trị trung gian và nhiều thông tin trạng thái khác.
+        <br>Ví dụ: tốc độ xe, góc bướm ga (throttle angle), vị trí gương, trạng thái hệ thống,...
+        <br>Có ba loại giá trị của diagnostic data:
+        <ul>
+          <li><b>Current value</b>: giá trị hiện tại đang được ECU sử dụng hoặc tạo ra trong quá trình hoạt động bình thường.</li>
+          <li><b>Stored value</b>: bản sao nội bộ của current value được lưu tại những thời điểm xác định (ví dụ khi xảy ra lỗi hoặc theo chu kỳ), do ECU quản lý.</li>
+          <li><b>Static value</b>: giá trị cố định, ví dụ như <b>VIN</b>.</li>
+        </ul>
+        Server không bắt buộc phải lưu bản sao nội bộ của dữ liệu cho mục đích chẩn đoán; trong trường hợp đó tester chỉ có thể yêu cầu current value.
+        <br>Việc chọn <b>repair shop session</b> hoặc <b>development testing session</b> sẽ kích hoạt các chức năng khác nhau của server (ví dụ chỉ <b>development testing session</b> mới được phép truy cập toàn bộ vùng nhớ).
+      </td>
+    </tr>
+    <tr>
+      <td>functional unit</td>
+      <td>
+        Tập hợp các <b>diagnostic service</b> có chức năng tương đồng hoặc bổ sung cho nhau.
+      </td>
+    </tr>
+    <tr>
+      <td>local server</td>
+      <td>
+        Server được kết nối vào cùng mạng cục bộ với <b>client</b> và thuộc cùng không gian địa chỉ (<b>address space</b>) với client.
+      </td>
+    </tr>
+    <tr>
+      <td>permanent DTC</td>
+      <td>
+        <b>DTC</b> vẫn được lưu trong <b>non-volatile memory (NVM)</b> ngay cả sau khi nhận yêu cầu <b>ClearDTC</b>, cho đến khi các điều kiện khác (thường là yêu cầu pháp lý) được đáp ứng, ví dụ tất cả các monitor tương ứng với DTC đó đã chạy thành công.
+        <br>Tham khảo các quy định pháp luật liên quan để biết đầy đủ các yêu cầu.
+      </td>
+    </tr>
+    <tr>
+      <td>record</td>
+      <td>
+        Một hoặc nhiều phần tử <b>diagnostic data</b> được nhóm lại và được nhận diện bằng một định danh duy nhất.
+        <br>Một <b>snapshot</b> chứa nhiều dữ liệu đầu vào/đầu ra cùng các <b>DTC</b> là một ví dụ của record.
+      </td>
+    </tr>
+    <tr>
+      <td>remote server</td>
+      <td>
+        Server không kết nối trực tiếp với mạng chẩn đoán chính.
+        <br>Remote server được nhận diện bằng <b>remote address</b>, thuộc một không gian địa chỉ độc lập với mạng chính.
+        <br>Remote server được truy cập thông qua một <b>local server</b> trên mạng chính. Mỗi local server có thể đóng vai trò là <b>gateway</b> đến một nhóm remote server độc lập.
+        <br>Do đó, remote server luôn được xác định bằng hai địa chỉ: một <b>local address</b> xác định gateway và một <b>remote address</b> xác định remote server.
+      </td>
+    </tr>
+    <tr>
+      <td>remote client</td>
+      <td>
+        Client không kết nối trực tiếp với mạng chẩn đoán chính.
+        <br>Remote client được nhận diện bằng <b>remote address</b>, thuộc một không gian địa chỉ độc lập với mạng chính.
+      </td>
+    </tr>
+    <tr>
+      <td>reprogramming software</td>
+      <td>
+        Thành phần của <b>boot software</b> cho phép thực hiện <b>reprogramming</b> đối với <b>electronic control unit (ECU)</b>.
+      </td>
+    </tr>
+    <tr>
+      <td>supported DTC</td>
+      <td>
+        <b>DTC</b> hiện đang được cấu hình (<b>configured</b>), hiệu chỉnh (<b>calibrated</b>) và được kích hoạt để hoạt động dưới các điều kiện vận hành xác định của xe.
+      </td>
+    </tr>
+  </tbody>
+</table> -->
+
 
 ---
