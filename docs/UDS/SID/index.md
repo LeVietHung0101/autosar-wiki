@@ -405,11 +405,50 @@ Bảng sau mô tả tất cả các SIDs.
 
 ---
 
-# SID & Sub Function
+# Functional Unit
+
+ISO 14229-1 phân loại các UDS service theo mục đích sử dụng thành các nhóm chức năng (functional unit) sau:
+
+<table class="hover-table">
+  <thead>
+    <tr>
+      <th>Functional Unit</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Diagnostic and Communication Management Functional Unit</td>
+      <td>Quản lý trạng thái hoạt động của ECU và điều khiển quá trình diagnostic communication.</td>
+    </tr>
+    <tr>
+      <td>Data Transmission Functional Unit</td>
+      <td>Trao đổi dữ liệu giữa client và server.</td>
+    </tr>
+    <tr>
+      <td>Stored Data Transmission Functional Unit</td>
+      <td>Đọc dữ liệu đã được ECU lưu trữ.</td>
+    </tr>
+    <tr>
+      <td>InputOutput Control Functional Unit</td>
+      <td>Cho phép tester điều khiển trực tiếp Input hoặc Output của ECU.</td>
+    </tr>
+    <tr>
+      <td>Routine Functional Unit</td>
+      <td>Yêu cầu ECU thực hiện một Routine.</td>
+    </tr>
+    <tr>
+      <td>Upload Download Functional Unit</td>
+      <td>Thực hiện lập trình ECU (Flash Programming).</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
-## Diagnostic Session Control (0x10)
+## Diagnostic and Communication Management Functional Unit
+
+### Diagnostic Session Control (0x10)
 
 <table class="hover-table">
   <thead>
@@ -443,9 +482,7 @@ Bảng sau mô tả tất cả các SIDs.
   </tbody>
 </table>
 
----
-
-## ECU Reset (0x11)
+### ECU Reset (0x11)
 
 <table class="hover-table">
   <thead>
@@ -479,9 +516,7 @@ Bảng sau mô tả tất cả các SIDs.
   </tbody>
 </table>
 
----
-
-## Security Access (0x27)
+### Security Access (0x27)
 
 <table class="hover-table">
   <thead>
@@ -505,9 +540,7 @@ Bảng sau mô tả tất cả các SIDs.
   </tbody>
 </table>
 
----
-
-## Communication Control (0x28)
+### Communication Control (0x28)
 
 <table class="hover-table">
   <thead>
@@ -541,13 +574,9 @@ Bảng sau mô tả tất cả các SIDs.
   </tbody>
 </table>
 
----
+### Authentication (0x29)
 
-## Authentication (0x29)
-
----
-
-## Tester Present (0x3E)
+### Tester Present (0x3E)
 
 <table class="hover-table">
   <thead>
@@ -566,39 +595,7 @@ Bảng sau mô tả tất cả các SIDs.
   </tbody>
 </table>
 
----
-
-## Access Timing Parameters (0x83)
-
-<table class="hover-table">
-  <thead>
-    <tr>
-      <th>Timing parameter access Type<br>(Sub function value)</th>
-      <th>Timing parameter access</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0x01</td>
-      <td>Set Timing Parameters</td>
-      <td>Sets specific timing parameters.</td>
-    </tr>
-    <tr>
-      <td>0x02</td>
-      <td>Get Timing Parameters</td>
-      <td>Retrieves current timing parameters.</td>
-    </tr>
-  </tbody>
-</table>
-
----
-
-## Secured Data Transmission (0x84)
-
----
-
-## Control DTC Settings (0x85)
+### Control DTC Settings (0x85)
 
 <table class="hover-table">
   <thead>
@@ -622,9 +619,8 @@ Bảng sau mô tả tất cả các SIDs.
   </tbody>
 </table>
 
----
 
-## Response On Event (0x86)
+### Response On Event (0x86)
 
 <table class="hover-table">
   <thead>
@@ -653,9 +649,8 @@ Bảng sau mô tả tất cả các SIDs.
   </tbody>
 </table>
 
----
 
-## Link Control (0x87)
+### Link Control (0x87)
 
 <table class="hover-table">
   <thead>
@@ -696,24 +691,17 @@ Bảng sau mô tả tất cả các SIDs.
 
 ---
 
-## Read Data By Identifier (0x22)
+## Data transmission functional unit
 
+#### Read Data By Identifier (0x22)
 
----
+### Read Memory By Address (0x23)
 
-## Read Memory By Address (0x23)
+### Read Scaling Data By Identifier (0x24)
 
----
+### Read Data By Identifier Periodic (0x2A)
 
-## Read Scaling Data By Identifier (0x24)
-
----
-
-## Read Data By Identifier Periodic (0x2A)
-
----
-
-## Dynamically Define Data Identifier (0x2C)
+### Dynamically Define Data Identifier (0x2C)
 
 <table class="hover-table">
   <thead>
@@ -742,21 +730,17 @@ Bảng sau mô tả tất cả các SIDs.
   </tbody>
 </table>
 
----
+### Write Data By Identifier (0x2E)
 
-## Write Data By Identifier (0x2E)
-
----
-
-## Write Memory By Address (0x3D)
+### Write Memory By Address (0x3D)
 
 ---
 
-## Clear Diagnostic Information (0x14)
+## Stored data transmission functional unit
 
----
+### Clear Diagnostic Information (0x14)
 
-## Read DTC Information (0x19)
+### Read DTC Information (0x19)
 
 <table class="hover-table">
   <thead>
@@ -905,13 +889,9 @@ Bảng sau mô tả tất cả các SIDs.
   </tbody>
 </table>
 
----
+### Input Output Control By Identifier (0x2F)
 
-## Input Output Control By Identifier (0x2F)
-
----
-
-## Routine Control (0x31)
+### Routine Control (0x31)
 
 <table class="hover-table">
   <thead>
@@ -942,27 +922,49 @@ Bảng sau mô tả tất cả các SIDs.
 
 ---
 
-## Request Download (0x34)
+## Upload download functional unit
+
+### Request Download (0x34)
+
+### Request Upload (0x35)
+
+### Transfer Data (0x36)
+
+### Request Transfer Exit (0x37)
+
+### Request File Transfer (0x38)
 
 ---
 
-## Request Upload (0x35)
+## Security sub-layer definition
+
+### Secured Data Transmission (0x84)
 
 ---
 
-## Transfer Data (0x36)
+## Others USD Service
 
----
+### Access Timing Parameters (0x83)
 
-## Request Transfer Exit (0x37)
-
----
-
-## Request File Transfer (0x38)
-
----
-
-## Negative Response (0x7F)
-
----
+<table class="hover-table">
+  <thead>
+    <tr>
+      <th>Timing parameter access Type<br>(Sub function value)</th>
+      <th>Timing parameter access</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x01</td>
+      <td>Set Timing Parameters</td>
+      <td>Sets specific timing parameters.</td>
+    </tr>
+    <tr>
+      <td>0x02</td>
+      <td>Get Timing Parameters</td>
+      <td>Retrieves current timing parameters.</td>
+    </tr>
+  </tbody>
+</table>
 

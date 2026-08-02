@@ -670,6 +670,15 @@ Toàn bộ dải mã Negative Response Code từ 0x00 đến 0xFF được chia 
   </tbody>
 </table>
 
+**Lưu ý**
+
+Khi client dùng **Functional Addressing** để gửi resquest message, các NRC sau sẽ **không được gửi** bởi server:
+- 0x11 - ServiceNotSupported (SNS)
+- 0x12 - SubFunctionNotSupported (SFNS)
+- 0x31 - RequestOutOfRange (ROOR)
+- 0x7E - SubFunctionNotSupportedInActiveSession (SFNSIAS)
+- 0x7F - ServiceNotSupportedInActiveSession (SNSIAS)
+
 ---
 
 # Tham khảo

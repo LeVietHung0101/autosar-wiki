@@ -1,7 +1,7 @@
 ---
 title: SecurityAccess (0x27) service
 parent: SID
-nav_order: 3
+nav_order: 10
 ---
 
 # SecurityAccess (0x27) service

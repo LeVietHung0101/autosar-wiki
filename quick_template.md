@@ -64,6 +64,25 @@ https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-qu
       <td></td>
     </tr>
     <tr>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="hover-table">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
       <td>
         <ul>
           <li>Item_1</li>
@@ -75,7 +94,6 @@ https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-qu
     </tr>
   </tbody>
 </table>
-
 
 
 ==============================================================================================
